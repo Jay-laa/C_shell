@@ -4,6 +4,7 @@ This is a simple shell program written in C language. It can execute commands en
 Shell is a simple UNIX command interpreter that replicates functionalities of the simple shell (sh).
 
 List of allowed functions and system calls
+
 access (man 2 access)
 chdir (man 2 chdir)
 close (man 2 close)
