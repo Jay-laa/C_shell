@@ -10,7 +10,7 @@
 char **strtow(char *input_str, char *delim_str)
 {
 	int idx1, idx2, word_len, char_idx, num_words = 0;
-	char **str_arr;
+	char **str;
 
 	if (input_str == NULL || input_str[0] == 0)
 		return (NULL);
@@ -18,37 +18,38 @@ char **strtow(char *input_str, char *delim_str)
 		delim_str = " ";
 
 	for (idx1 = 0; input_str[idx1] != '\0'; idx1++)
-		if (!is_delim(input_str[idx1], delim_str) && (is_delim(input_str[idx1 + 1], delim_str) || !input_str[idx1 + 1]))
+		if (!is_delim(input_str[idx1], delim_str) && (is_delim(input_str[idx1 + 1],
+						delim_str) || !input_str[idx1 + 1]))
 			num_words++;
 
 	if (num_words == 0)
 		return (NULL);
 
-	str_arr = malloc((1 + num_words) * sizeof(char *));
-	if (!str_arr)
+	str = malloc((1 + num_words) * sizeof(char *));
+	if (!str)
 		return (NULL);
-
 	for (idx1 = 0, idx2 = 0; idx2 < num_words; idx2++)
 	{
 		while (is_delim(input_str[idx1], delim_str))
 			idx1++;
 		word_len = 0;
-		while (!is_delim(input_str[idx1 + word_len], delim_str) && input_str[idx1 + word_len])
+		while (!is_delim(input_str[idx1 + word_len],
+					delim_str) && input_str[idx1 + word_len])
 			word_len++;
-		str_arr[idx2] = malloc((word_len + 1) * sizeof(char));
-		if (!str_arr[idx2])
+		str[idx2] = malloc((word_len + 1) * sizeof(char));
+		if (!str[idx2])
 		{
 			for (char_idx = 0; char_idx < idx2; char_idx++)
-				free(str_arr[char_idx]);
-			free(str_arr);
+				free(str[char_idx]);
+			free(str);
 			return (NULL);
 		}
 		for (char_idx = 0; char_idx < word_len; char_idx++)
-			str_arr[idx2][char_idx] = input_str[idx1++];
-		str_arr[idx2][char_idx] = 0;
+			str[idx2][char_idx] = input_str[idx1++];
+		str[idx2][char_idx] = 0;
 	}
-	str_arr[idx2] = NULL;
-	return (str_arr);
+	str[idx2] = NULL;
+	return (str);
 }
 
 /**
@@ -85,7 +86,8 @@ char **strtow2(char *str, char delim)
 			idx++;
 
 		word_len = 0;
-		while (str[idx + word_len] != delim && str[idx + word_len] && str[idx + word_len] != delim)
+		while (str[idx + word_len] != delim && str[idx + word_len]
+				&& str[idx + word_len] != delim)
 			word_len++;
 
 		words[word_idx] = malloc((word_len + 1) * sizeof(char));
