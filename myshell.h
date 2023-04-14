@@ -268,4 +268,4 @@ int replace_alias_with_command(info_t *);
 int replace_variables_in_command(info_t *);
 int replace_substring(char **, char *);
 
-#endif /* MYSHELL_H */
+#endif /* MYSHELL_H */ g
