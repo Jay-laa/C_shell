@@ -1,12 +1,12 @@
 #include "myshell.h"
 
 /**
- * _memset2 - fills memory with a constant byte
- * @dest: the pointer to the memory area
- * @val: the byte to fill *dest with
- * @nbytes: the amount of bytes to be filled
- * Return: (dest) a pointer to the memory area dest
- */
+* _memset2 - fills memory with a constant byte
+* @dest: the pointer to the memory area
+* @val: the byte to fill *dest with
+* @nbytes: the amount of bytes to be filled
+* Return: (dest) a pointer to the memory area dest
+*/
 char *_memset2(char *dest, char val, unsigned int nbytes)
 {
 	unsigned int i;
@@ -17,9 +17,9 @@ char *_memset2(char *dest, char val, unsigned int nbytes)
 }
 
 /**
- * free_strings - frees a string of strings
- * @str_arr: string of strings
- */
+* free_strings - frees a string of strings
+* @str_arr: string of strings
+*/
 void free_strings(char **str_arr)
 {
 	char **p = str_arr;
@@ -32,13 +32,13 @@ void free_strings(char **str_arr)
 }
 
 /**
- * realloc_array - dynamically reallocates a block of memory
- * @old_ptr: pointer to previously allocated memory block
- * @old_size: size of the previously allocated memory block in bytes
- * @new_size: size of the new memory block in bytes
- *
- * Return: pointer to the new memory block
- */
+* realloc_array - dynamically reallocates a block of memory
+* @old_ptr: pointer to previously allocated memory block
+* @old_size: size of the previously allocated memory block in bytes
+* @new_size: size of the new memory block in bytes
+*
+* Return: pointer to the new memory block
+*/
 void *realloc_array(void *old_ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *new_ptr;
