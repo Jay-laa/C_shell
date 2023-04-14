@@ -69,7 +69,7 @@
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
-/* Structures */
+/* Struct declarations */
 
 /*
  * struct liststr - contains singly linked list
@@ -148,15 +148,15 @@ typedef struct builtin
 } builtin_struct;
 
 /* Function prototypes for hsh_loop.c */
-int start_hsh_loop(info_t *, char **);
+int start_hsh(info_t *, char **);
 int find_builtin_command(info_t *);
 void find_command(info_t *);
-void fork_command(info_t *);
+void fork_exec_cmd(info_t *);
 
 /* Function prototypes for command_parser.c */
 int is_command(info_t *, char *);
 char *duplicate_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+char *find_command_path(info_t *, char *, char *);
 
 /* Function prototypes for loophsh.c */
 int loophsh(char **);
@@ -165,13 +165,13 @@ int loophsh(char **);
 void error_puts(char *);
 int error_putchar(char);
 int putfd(char c, int fd);
-int putsfd(char *str, int fd);
+int puts_fd(char *str, int fd);
 
 /* Function prototypes for string_utils.c  */
 int str_length(char *);
 int string_compare(char *, char *);
 char *starts_with(const char *, const char *);
-char *concatenate_strings(char *, char *);
+char *string_concat(char *, char *);
 
 /* Function prototypes for string1_utils.c */
 char *string_copy(char *, char *);
