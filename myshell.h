@@ -180,7 +180,7 @@ void _puts(char *);
 int _putchar(char);
 
 /* Function prototypes for string_operations.c  */
-char *string_copy_n(char *, char *, int);
+char *string_copy(char *, char *, int);
 char *string_concatenate_n(char *, char *, int);
 char *string_find_char(char *, char);
 
@@ -211,7 +211,7 @@ void remove_comments(char *);
 
 /* Function prototypes for shellbuiltins.c */
 int exit_shell(info_t *);
-int change_directory(info_t *);
+int ch_dir(info_t *);
 int show_help(info_t *);
 
 /* Function prototypes for shellbuiltins1.c */

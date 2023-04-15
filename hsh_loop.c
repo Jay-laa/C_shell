@@ -57,14 +57,14 @@ int find_builtin_command(info_t *info)
 {
 	int index, builtin_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _exit_shell},
-		{"env", _print_env},
-		{"help", _show_help},
-		{"history", _show_history},
-		{"setenv", _set_envvar},
-		{"unsetenv", _unset_envvar},
-		{"cd", _ch_dir},
-		{"alias", _manage_alias},
+		{"exit", exit_shell},
+		{"env", print_env},
+		{"help", show_help},
+		{"history", show_history},
+		{"setenv", set_envvar},
+		{"unsetenv", unset_envvar},
+		{"cd", ch_dir},
+		{"alias", alias_builtin},
 		{NULL, NULL}
 	};
 
