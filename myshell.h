@@ -72,20 +72,90 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 /* Struct declarations */
 
 /*
- * struct liststr - contains singly linked list
- * @number: the integer field
+ * struct list_t - contains singly linked list
  * @str: a string
- * @next_node: points to the next node
+ * @number: the integer field
+ * @next: points to the next node
  *
  * Description: This struct represents a node in a singly linked list
  * of strings and integers
  */
-typedef struct liststr
+typedef struct list_s
 {
-	int number;
-	char *str;
-	struct liststr *next_node;
+    char *str;
+    int number;
+    struct list_s *next;
 } list_t;
+
+
+/*
+ * struct liststr -  represents a node in a singly linked list of strings
+ *
+ * @number: the integer field
+ * @str: a string
+ * @next_node: points to the next node
+ *
+ *
+ * Description: This structure represents a node in a singly linked list of
+ * strings and integers. It contains an integer value, a string value, and a
+ * pointer to the next node in the list. This structure is used to implement
+ * history functionality in the shell, where each command entered by the user
+ * is stored in a linked list for later retrieval.
+ */
+typedef struct liststr_s
+{
+        int number;
+        char *str;
+        struct liststr_s *next_node;
+} liststr;
+
+/**
+ * struct info_s - holds information about the shell
+ *
+ * @args: the command line arguments
+ * @env: the environment variables
+ * @status: the exit status of the last command
+ * @line_count: the error count
+ * @history: the list of command history
+ * @isatty: whether the shell is attached to a terminal
+ * @pid: the process ID of the shell
+ * @input_fd: the file descriptor for input
+ * @output_fd: the file descriptor for output
+ */
+typedef struct info_s
+{
+	char **args;
+	char *cmd_name;
+	char **env;
+	int linecount_flag;
+	unsigned int line_count;
+	char* filename;
+	int status;
+	char *cmd_path;
+	struct liststr_s *history;
+	int isatty;
+	int type;
+	pid_t pid;
+	int input_fd;
+	int output_fd;
+	char **argv;
+	int err_num;
+	int interactive;
+
+} info_t;
+
+/**
+ * struct builtin_table - Searches for built-in commands and executes them
+ */
+typedef struct builtin_table
+{
+	char *cmd_name;
+	char *type;
+	void (*function)(void);
+	int (*func)(info_t *);
+	int (*cmd_func)(info_t *);
+} builtin_table;
+
 
 /**
  * struct cmd_info - contains information about a command
@@ -149,8 +219,8 @@ typedef struct builtin
 
 /* Function prototypes for hsh_loop.c */
 int start_hsh(info_t *, char **);
-int find_builtin_command(info_t *);
-void find_command(info_t *);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
 void fork_exec_cmd(info_t *);
 
 /* Function prototypes for command_parser.c */
@@ -169,7 +239,7 @@ int puts_fd(char *str, int fd);
 
 /* Function prototypes for string_utils.c  */
 int str_length(char *);
-int string_compare(char *, char *);
+int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 char *string_concat(char *, char *);
 
@@ -180,7 +250,7 @@ void _puts(char *);
 int _putchar(char);
 
 /* Function prototypes for string_operations.c  */
-char *string_copy(char *, char *, int);
+char *string_copy_n(char *, char *, int);
 char *string_concatenate_n(char *, char *, int);
 char *string_find_char(char *, char);
 
@@ -210,19 +280,19 @@ char *to_string(long int, int, int);
 void remove_comments(char *);
 
 /* Function prototypes for shellbuiltins.c */
-int exit_shell(info_t *);
-int ch_dir(info_t *);
-int show_help(info_t *);
+int exit_(info_t *);
+int cd_(info_t *);
+int help_(info_t *);
 
 /* Function prototypes for shellbuiltins1.c */
-int show_history(info_t *);
+int history_(info_t *);
 int unset_alias(info_t *, char *);
 int set_alias(info_t *, char *);
-int alias_builtin(info_t *);
+int alias_(info_t *);
 
 /* Function prototypes for lineinput.c */
 ssize_t get_input(info_t *, char **, size_t *);
-ssize_t get_line(info_t *);
+ssize_t getlinE(info_t *);
 ssize_t read_buf(info_t *, char **, size_t *);
 int get_line(info_t *, char **, size_t *);
 void sigint_handler(int);
@@ -233,20 +303,20 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* Function prototypes for envvars.c */
-int print_env(info_t *);
+int env_(info_t *);
 char *getenv_(info_t *, const char *);
-int set_envvar(info_t *);
-int unset_envvar(info_t *);
+int setenv_(info_t *);
+int unsetenv_(info_t *);
 int populate_envvar(info_t *);
 
 /* Function prototypes for getenv.c */
-char **get_env(info_t *);
-int unset_env(info_t *, char *);
-int set_env(info_t *, char *, char *);
+char **get_environ(info_t *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
 
 /* Function prototypes for file_history.c */
 char *get_history_file_path(info_t *info);
-int write_history_file(info_t *info);
+int write_history(info_t *info);
 int read_history_file(info_t *info);
 int add_to_history(info_t *info, char *, int);
 int renumber_history_list(info_t *info);

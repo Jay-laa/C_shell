@@ -1,13 +1,13 @@
 #include "'myshell.h"
 
 /**
- * show_history - prints the history list, one command by line, preceded
+ * history_ - prints the history list, one command by line, preceded
  * with line numbers, starting at 0.
  * @info: Structure containing potential arguments.
  *
  * Return: Always 0
  */
-int show_history(info_t *info)
+int history_(info_t *info)
 {
     /* Call print_list to display the history */
 	print_list(info->history);
@@ -83,12 +83,12 @@ int print_alias(list_t *alias_node)
 }
 
 /**
- * alias_builtin - mimics the alias builtin (man alias)
+ * alias_ - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * Return: Always 0
  */
-int alias_builtin(info_t *info)
+int alias_(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;

@@ -20,14 +20,14 @@ int str_length(char *str)
 }
 
 /**
- * string_compare - performs lexicographic comparison of two strings.
+ * _strcmp - performs lexicographic comparison of two strings.
  * @str1: the first string
  * @str2: the second string
  *
  * Return: negative value if str1 < str2,
  * positive value if str1 > str2, 0 if str1 == str2
  */
-int string_compare(char *str1, char *str2)
+int _strcmp(char *str1, char *str2)
 {
 	while (*str1 && *str2)
 	{

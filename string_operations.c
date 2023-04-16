@@ -1,14 +1,14 @@
 #include "myshell.h"
 
 /**
- * string_copy - copies a string from source to destination
+ * string_copy_n - copies a string from source to destination
  * @destination: the destination string to be copied to
  * @source: the source string to copy from
  * @count: the number of characters to be copied
  *
  * Return: the concatenated string
  */
-char *string_copy(char *destination, char *source, int count)
+char *string_copy_n(char *destination, char *source, int count)
 {
 	int i, j;
 	char *start = destination;

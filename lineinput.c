@@ -43,7 +43,7 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 }
 
 /**
-* get_line - reads user input from stdin
+* getlinE - reads user input from stdin
 * @info: struct containing shell info
 *
 * Return: number of bytes read

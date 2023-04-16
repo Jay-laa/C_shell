@@ -26,15 +26,15 @@ char *get_history_file_path(info_t *info)
 }
 
 /**
-* write_history_file - creates a file, or appends to an existing file
+* write_history - creates a file, or appends to an existing file
 * @info: the parameter struct
 *
 * Return: 1 on success, else -1
 */
-int write_history_file(info_t *info)
+int write_history(info_t *info)
 {
 	ssize_t fd;   /*file_descriptor. */
-	char *hist_file = get_history_file(info);
+	char *hist_file = get_history_file_path(info);
 	list_t *node = NULL;
 
 	if (!hist_file)

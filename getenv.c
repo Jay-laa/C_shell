@@ -1,12 +1,12 @@
 #include "myshell.h"
 
 /**
-* get_env - Returns a copy of the string array containing environment variables
+* get_environ - Returns a copy of the string array containing environment variables
 * @info: Pointer to struct containing shell info
 *
 * Return: Always 0
 */
-char **get_env(info_t *info)
+char **get_environ(info_t *info)
 {
 	if (!info->environ || info->env_changed)
 	{

@@ -134,7 +134,7 @@ int replace_variables(info_t *info)
 				_strdup(_strchr(node->str, '=') + 1));
 			continue;
 		}
-		replace_str(&(info->argv[i]), _strdup(""));
+		replace_str(&(info->argv[i]), int strdup(""));
 
 	}
 	return (0);
