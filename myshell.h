@@ -72,7 +72,7 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 /* Struct declarations */
 
 /*
- * struct list_t - contains singly linked list
+ * struct list_s - contains singly linked list
  * @str: a string
  * @number: the integer field
  * @next: points to the next node
@@ -82,14 +82,14 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
  */
 typedef struct list_s
 {
-    char *str;
-    int number;
-    struct list_s *next;
+	char *str;
+	int number;
+	struct list_s *next;
 } list_t;
 
 
 /*
- * struct liststr -  represents a node in a singly linked list of strings
+ * struct liststr_s -  represents a node in a singly linked list of strings
  *
  * @number: the integer field
  * @str: a string
@@ -104,17 +104,26 @@ typedef struct list_s
  */
 typedef struct liststr_s
 {
-        int number;
-        char *str;
-        struct liststr_s *next_node;
+	int number;
+	char *str;
+	struct liststr_s *next_node;
 } liststr;
 
 /**
  * struct info_s - holds information about the shell
  *
  * @args: the command line arguments
+ * @cmd_name: The name of the command being executed
  * @env: the environment variables
+ * @linecount_flag: A flag indicating whether to display line count for history
+ * @filename: The name of the file to read commands from if not stdin.
  * @status: the exit status of the last command
+ * @cmd_path: The full path to the command being executed.
+ * @type: The type of command entered (built-in or external)
+ * @argv: An array of strings representing the command line arguments.
+ * @err_num: The error number
+ * @interactive: A flag indicating whether
+ * the shell is running in interactive mode
  * @line_count: the error count
  * @history: the list of command history
  * @isatty: whether the shell is attached to a terminal
@@ -128,8 +137,8 @@ typedef struct info_s
 	char *cmd_name;
 	char **env;
 	int linecount_flag;
-	unsigned int line_count;
-	char* filename;
+	int line_count;
+	char *filename;
 	int status;
 	char *cmd_path;
 	struct liststr_s *history;
@@ -146,12 +155,15 @@ typedef struct info_s
 
 /**
  * struct builtin_table - Searches for built-in commands and executes them
+ * @cmd_name: The name of the built-in command
+ * @type: The type of the built-in command (e.g. "exit", "env")
+ * @func: A pointer to the function that executes the built-in command
+ * @cmd_func: A pointer to the function that validates the built-in command
  */
 typedef struct builtin_table
 {
 	char *cmd_name;
 	char *type;
-	void (*function)(void);
 	int (*func)(info_t *);
 	int (*cmd_func)(info_t *);
 } builtin_table;
@@ -221,7 +233,7 @@ typedef struct builtin
 int start_hsh(info_t *, char **);
 int find_builtin(info_t *);
 void find_cmd(info_t *);
-void fork_exec_cmd(info_t *);
+void fork_cmd(info_t *);
 
 /* Function prototypes for command_parser.c */
 int is_command(info_t *, char *);
@@ -268,7 +280,7 @@ int free_ptr(void **);
 
 /* Function prototypes for integer.c */
 int interactive(info_t *);
-int is_delimiter(char, char *);
+int is_delimiter(char **, char *);
 int is_alpha(int);
 int to_integer(char *);
 
@@ -280,15 +292,15 @@ char *to_string(long int, int, int);
 void remove_comments(char *);
 
 /* Function prototypes for shellbuiltins.c */
-int exit_(info_t *);
-int cd_(info_t *);
-int help_(info_t *);
+int quit(info_t *);
+int chd(info_t *);
+int info(info_t *);
 
 /* Function prototypes for shellbuiltins1.c */
-int history_(info_t *);
+int log_(info_t *);
 int unset_alias(info_t *, char *);
 int set_alias(info_t *, char *);
-int alias_(info_t *);
+int shortcut(info_t *);
 
 /* Function prototypes for lineinput.c */
 ssize_t get_input(info_t *, char **, size_t *);
@@ -303,10 +315,10 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* Function prototypes for envvars.c */
-int env_(info_t *);
+int vars(info_t *);
 char *getenv_(info_t *, const char *);
-int setenv_(info_t *);
-int unsetenv_(info_t *);
+int export_(info_t *);
+int unexport_(info_t *);
 int populate_envvar(info_t *);
 
 /* Function prototypes for getenv.c */

@@ -1,12 +1,12 @@
 #include "myshell.h"
 
 /**
-* env_ - prints the current environment
+* vars - prints the current environment
 * @info: pointer to a struct containing potential arguments.
 *  Used to maintain constant function prototype.
 * Return: Always 0
 */
-int env_(info_t *info)
+int vars(info_t *info)
 {
 	print_list_str(info->env);
 	return (0);
@@ -35,14 +35,14 @@ char *getenv_(info_t *info, const char *name)
 }
 
 /**
-* setenv_ - Initialize a new environment variable,
+* export_ - Initialize a new environment variable,
 *             or modify an existing one
 * @info: Structure containing potential arguments.
 *        Used to maintain constant function prototype.
 *
 * Return: Always 0.
 */
-int setenv_(info_t *info)
+int export_(info_t *info)
 {
 	if (info->argc != 3)
 	{
@@ -55,13 +55,13 @@ int setenv_(info_t *info)
 }
 
 /**
-* unsetenv_ - Remove an environment variable
+* unexport_ - Remove an environment variable
 * @info: Structure containing command arguments and environment variables
 * Used to maintain constant function prototype.
 *
 * Return: Always 0
 */
-int unset_envvar(info_t *info)
+int unexport_(info_t *info)
 {
 	int i;
 

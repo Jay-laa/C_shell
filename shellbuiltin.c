@@ -1,13 +1,13 @@
 #include "myshell.h"
 
 /**
- * exit_ - exits the shell
+ * quit - exits the shell
  * @info: pointer to a struct containing potential arguments.
  * used to maintain constant function prototype.
  *
  * Return: exits with a given exit status (0) if info->argv[0] != "exit"
  */
-int exit_(info_t *info)
+int quit(info_t *info)
 {
 	int exit_status;
 
@@ -30,13 +30,13 @@ int exit_(info_t *info)
 }
 
 /**
- * cd_ - changes the current directory of the process
+ * chd - changes the current directory of the process
  * @info: structure containing potential arguments
  *        constant function prototype
  *
  * Return: Always 0
  */
-int cd_(info_t *info)
+int chd(info_t *info)
 {
 	char *current_dir, *new_dir, buffer[1024];
 	int chdir_ret;
@@ -83,11 +83,11 @@ int cd_(info_t *info)
 }
 
 /**
- * help_ - prints help message to the standard output
+ * info - prints help message to the standard output
  * @info: pointer to struct containing potential arguments
  * Return: 0 on success, or -1 on error
  */
-int help_(info_t *info)
+int info(info_t *info)
 {
 	char **args;
 

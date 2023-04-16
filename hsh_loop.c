@@ -44,38 +44,39 @@ int start_hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin - searches for a built-in command in the command line
- * @info: pointer to struct containing current command line information
+ * find_builtin - finds a builtin command
+ * @info: the parameter & return info struct
  *
- * Return: integer status code:
- * -1 if built-in not found,
- * 0 if built-in executed successfully,
- * 1 if built-in found but not successful,
- * -2 if built-in signals exit()
+ * Return: -1 if builtin not found,
+ *         0 if builtin executed successfully,
+ *         1 if builtin found but not successful,
+ *         -2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
-	int index, builtin_ret = -1;
-	builtin_table builtintbl[] = {
-		{"exit", (int (*)(info_t *)) exit_},
-		{"env", (int (*)(info_t *)) env_},
-		{"help", (int (*)(info_t *)) help_},
-		{"history", (int (*)(info_t *)) history_},
-		{"setenv", (int (*)(info_t *)) setenv_},
-		{"unsetenv", (int (*)(info_t *)) unsetenv_},
-		{"cd", (int (*)(info_t *)) cd_},
-		{"alias", (int (*)(info_t *)) alias_},
+	int i, built_in_ret = -1;
+	builtin_table builtin_table[] = {
+		{"exit", quit},
+		{"env", vars},
+		{"help", info},
+		{"history", log_},
+		{"setenv", export_},
+		{"unsetenv", unexport_},
+		{"cd", chd},
+		{"alias", shortcut},
 		{NULL, NULL}
 	};
 
-	for (index = 0; builtintbl[index].type; index++)
-		if (strcmp(info->argv[0], builtintbl[index].type) == 0)
+	for (i = 0; builtin_table[i].type; i++)
+	{
+		if (_strcmp(info->argv[0], builtin_table[i].type) == 0)
 		{
 			info->line_count++;
-			builtin_ret = builtintbl[index].func(info);
+			built_in_ret = builtin_table[i].func(info);
 			break;
 		}
-	return (builtin_ret);
+	}
+	return (built_in_ret);
 }
 
 /**
@@ -102,26 +103,26 @@ void find_cmd(info_t *info)
 	}
 
 	for (index = 0, arg_count = 0; info->args[index]; index++)
-		if (!is_delim(info->args[index], " \t\n"))
+		if (!is_delimiter(info->args)char *[index], " \t\n")
 			arg_count++;
 
 	/* If there are no arguments, return */
 	if (!arg_count)
 		return;
 
-	cmd_path = find_path(info, getenv(info, "PATH="), info->argv[0]);
+	cmd_path = find_path(info, getenv_(info, "PATH="), info->argv[0]);
 
 	if (cmd_path)
 	{
 		info->cmd_path = cmd_path;
-		fork_exec_cmd(info);
+		fork_cmd(info);
 	}
 	else
 	{
 	/* If the command is not found, print an error message */
-		if ((interactive(info) || getenv(info, "PATH=")
+		if ((interactive(info) || getenv_(info, "PATH=")
 			|| info->argv[0][0] == '/') && find_cmd(info, info->argv[0]))
-			fork_exec_cmd(info);
+			fork_cmd(info);
 		else if (*(info->args) != '\n')
 		{
 			info->status = 127;
@@ -137,7 +138,7 @@ void find_cmd(info_t *info)
  *
  * Return: void
  */
-void fork_exec_cmd(info_t *info)
+void fork_cmd(info_t *info)
 {
 	pid_t pid;
 
@@ -149,7 +150,7 @@ void fork_exec_cmd(info_t *info)
 	}
 	if (pid == 0)
 	{
-		if (execve(info->cmd_path, info->argv, get_env(info)) == -1)
+		if (execve(info->cmd_path, info->argv, get_environ(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)
