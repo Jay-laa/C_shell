@@ -3,7 +3,7 @@
 /**
 * get_history_file_path - gets the path of history file
 * @info: structure containing potential arguments.
-*  
+*
 *
 * Return: allocated string containing history file
 */

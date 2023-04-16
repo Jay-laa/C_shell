@@ -216,10 +216,14 @@ int show_help(info_t *);
 
 /* Function prototypes for shellbuiltins1.c */
 int show_history(info_t *);
-int define_alias(info_t *);
+int unset_alias(info_t *, char *);
+int set_alias(info_t *, char *);
+int alias_builtin(info_t *);
 
 /* Function prototypes for lineinput.c */
-ssize_t get_input(info_t *);
+ssize_t get_input(info_t *, char **, size_t *);
+ssize_t get_line(info_t *);
+ssize_t read_buf(info_t *, char **, size_t *);
 int get_line(info_t *, char **, size_t *);
 void sigint_handler(int);
 
@@ -229,43 +233,43 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* Function prototypes for envvars.c */
-char *getenv_value(info_t *, const char *);
-int display_environment(info_t *);
-int set_environment_variable(info_t *);
-int unset_environment_variable(info_t *);
-int populate_environment_list(info_t *);
+int print_env(info_t *);
+char *getenv_(info_t *, const char *);
+int set_envvar(info_t *);
+int unset_envvar(info_t *);
+int populate_envvar(info_t *);
 
 /* Function prototypes for getenv.c */
-char **get_environment(info_t *);
-int unset_environment_variable(info_t *, char *);
-int set_environment_variable(info_t *, char *, char *);
+char **get_env(info_t *);
+int unset_env(info_t *, char *);
+int set_env(info_t *, char *, char *);
 
 /* Function prototypes for file_history.c */
 char *get_history_file_path(info_t *info);
 int write_history_file(info_t *info);
 int read_history_file(info_t *info);
-int build_history_list_from_buffer(info_t *info, char *buf, int linecount);
+int add_to_history(info_t *info, char *, int);
 int renumber_history_list(info_t *info);
 
 /* Function prototypes for linkedlist.c */
-list_t *add_node_to_list(list_t **, const char *, int);
-list_t *add_node_to_list_end(list_t **, const char *, int);
-size_t print_string_list(const list_t *);
-int delete_node_from_list_by_index(list_t **, unsigned int);
+list_t *add_node_list(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+size_t print_lists(const list_t *);
+int delete_node_at_idx(list_t **, unsigned int);
 void free_linked_list(list_t **);
 
 /* Function prototypes for linkedlist1.c */
-size_t get_list_length(const list_t *);
-char **convert_list_to_string_array(list_t *);
-size_t print_linked_list(const list_t *);
-list_t *find_node_starting_with(list_t *, char *, char);
-ssize_t get_node_index_in_list(list_t *, list_t *);
+size_t list_length(const list_t *);
+char **list_to_string(list_t *);
+size_t print_lists(const list_t *);
+list_t *find_node_starts(list_t *, char *, char);
+ssize_t get_node_idx(list_t *, list_t *);
 
 /* Function prototypes for varsubst.c */
-int is_variable_chain(info_t *, char *, size_t *);
-void check_variable_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias_with_command(info_t *);
-int replace_variables_in_command(info_t *);
-int replace_substring(char **, char *);
+int var_chain(info_t *, char *, size_t *);
+void check_var_chain(info_t *, char *, size_t *, size_t, size_t);
+int replace_alias(info_t *);
+int replace_variables(info_t *);
+int replace_str(char **, char *);
 
 #endif /* MYSHELL_H */

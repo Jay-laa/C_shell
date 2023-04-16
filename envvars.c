@@ -67,7 +67,7 @@ int unset_envvar(info_t *info)
 
 	if (info->argc == 1)
 	{
-		_eputs("Missing arguments. Please specify one or more environment variables to remove.\n");
+		_eputs("Missing arguments. Please specify one or more env var to remove.\n");
 		return (1);
 	}
 	for (i = 1; i < info->argc; i++)

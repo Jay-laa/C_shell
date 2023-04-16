@@ -13,7 +13,7 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 	ssize_t bytes_read = 0;
 	size_t size_p = 0;
 
-	if (!buffer_size) / if the buffer is empty, fill it */
+	if (!buffer_size)
 	{
 		free(*buffer);
 		*buffer = NULL;
@@ -27,7 +27,7 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 		{
 			if ((*buffer)[bytes_read - 1] == '\n')
 			{
-		(buffer)[bytes_read - 1] = '\0'; / remove trailing newline */
+				(buffer)[bytes_read - 1] = '\0';
 				bytes_read--;
 			}
 			info->linecount_flag = 1;
@@ -115,8 +115,8 @@ ssize_t read_buf(info_t *info, char *buffer, size_t *buffer_size)
 /**
 * get_line - reads the next line of input from STDIN
 * @info: struct containing information about the current command
-* @ptr: address of pointer to buffer, preallocated or NULL
-* @length: size of preallocated ptr buffer if not NULL
+* @buffer: address of pointer to buffer, preallocated or NULL
+* @buf_size: size of preallocated ptr buffer if not NULL
 *
 * Return: length of the string read, or -1 on failure
 */
@@ -139,15 +139,19 @@ int get_line(info_t *info, char **buffer, size_t *buf_size)
 		return (-1);
 
 	end_of_line = _strchr(read_buf + read_buf_start, '\n');
-	line_size = end_of_line ? 1 + (unsigned int)(end_of_line - read_buf) : read_buf_end;
-	new_line = _realloc(line, line_len, line_len ? line_len + line_size : line_size + 1);
+	line_size = end_of_line ? 1 + (unsigned int)
+		(end_of_line - read_buf) : read_buf_end;
+	new_line = _realloc(line, line_len,
+			line_len ? line_len + line_size : line_size + 1);
 	if (!new_line) /* MALLOC FAILURE! */
 		return (line ? free(line), -1 : -1);
 
 	if (line_len)
-		_strncat(new_line, read_buf + read_buf_start, line_size - read_buf_start);
+		_strncat(new_line, read_buf + read_buf_start,
+				line_size - read_buf_start);
 	else
-		_strncpy(new_line, read_buf + read_buf_start, line_size - read_buf_start + 1);
+		_strncpy(new_line, read_buf + read_buf_start,
+				line_size - read_buf_start + 1);
 
 	line_len += line_size - read_buf_start;
 	read_buf_start = line_size;
