@@ -22,9 +22,8 @@ int is_delimiter(char **ch, char *delim)
 {
 	while (*delim)
 	{
-		if (*delim++ == ch)
+		if (*delim++ == **ch)
 			return (1);
-		delim++;
 	}
 	return (0);
 }

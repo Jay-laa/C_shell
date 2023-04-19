@@ -56,14 +56,14 @@ int change(info_t *info)
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!getenv_(info, "OLDPWD="))
 		{
 			_puts(current_dir);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-		chdir_ret = 0
+		_puts(getenv_(info, "OLDPWD=")), _putchar('\n');
+		chdir_ret = 0;
 			chdir((new_dir = getenv_(info, "OLDPWD=")) ? new_dir : "/");
 	}
 	else
@@ -76,8 +76,8 @@ int change(info_t *info)
 	}
 	else
 	{
-		assign(info, "OLDPWD", getenv_(info, "PWD="));
-		assign(info, "PWD", getcwd(buffer, 1024));
+		_setenv(info, "OLDPWD", getenv_(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }

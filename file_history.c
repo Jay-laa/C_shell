@@ -12,7 +12,7 @@ char *get_history_file_path(info_t *info)
 {
 	char *buffer, *folder;
 
-	folder = _getenv(info, "HOME=");
+	folder = getenv_(info, "HOME=");
 	if (!folder)
 	return (NULL);
 	buffer = malloc(sizeof(char) * (_strlen(folder) + _strlen(HIST_FILE) + 2));

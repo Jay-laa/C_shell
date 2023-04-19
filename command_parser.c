@@ -62,28 +62,28 @@ char *find_command_path(info_t *info, char *path_str, char *cmd)
 	int index = 0, start_pos = 0;
 	char *path;
 
-	if (!pathstr)
+	if (!path_str)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((strlen(cmd) > 2) && starts_with(cmd, "./"))
 	{
-		if (is_cmd(info, cmd))
+		if (is_command(info, cmd))
 			return (cmd);
 	}
 	while (1)
 	{
-		if (!pathstr[index] || pathstr[index] == ':')
+		if (!path_str[index] || path_str[index] == ':')
 		{
-			path = dup_chars(pathstr, start_pos, index);
+			path = duplicate_chars(path_str, start_pos, index);
 			if (!*path)
-				_strcat(path, cmd);
+				strcat(path, cmd);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				strcat(path, "/");
+				strcat(path, cmd);
 			}
-			if (is_cmd(info, path))
+			if (is_command(info, path))
 				return (path);
-			if (!pathstr[index])
+			if (!path_str[index])
 				break;
 			start_pos = index;
 		}

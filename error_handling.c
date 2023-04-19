@@ -1,12 +1,12 @@
 #include "myshell.h"
 
 /**
- * error_puts - prints the input string to standard error
+ * _eputs - prints the input string to standard error
  * @str: the string to be printed
  *
  * Return: nothing
  */
-void error_puts(char *str)
+void _eputs(char *str)
 {
 	int index = 0;
 
@@ -15,19 +15,20 @@ void error_puts(char *str)
 
 	while (str[index] != '\0')
 	{
-		_eputchar_fd(str[index], STDERR_FILENO);
+		_eputs(str);
+		char(index);
 		index++;
 	}
 }
 
 /**
- * error_putchar - writes the character ch to stderr
+ * _eputchar - writes the character ch to stderr
  * @ch: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int error_putchar(char ch)
+int _eputchar(char ch)
 {
 	static int idx;
 	static char buf[WRITE_BUF_SIZE];
@@ -62,7 +63,7 @@ int putfd(char ch, int fd)
 	}
 
 	if (ch != BUF_FLUSH)
-		buffer[buf_pos++] = c;
+		buffer[buf_pos++] = ch;
 
 	return (1);
 }

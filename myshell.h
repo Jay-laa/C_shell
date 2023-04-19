@@ -125,9 +125,12 @@ typedef struct liststr_s
  * @interactive: A flag indicating whether
  * the shell is running in interactive mode
  * @line_count: the error count
+ * @alias: alternate name
  * @history: the list of command history
  * @isatty: whether the shell is attached to a terminal
+ * @readfd: file descriptor used for reading data from a file
  * @pid: the process ID of the shell
+ * @line_number: holds the line number where an error occurred
  * @input_fd: the file descriptor for input
  * @output_fd: the file descriptor for output
  */
@@ -138,10 +141,13 @@ typedef struct info_s
 	char **env;
 	int linecount_flag;
 	int line_count;
+	int line_number;
 	char *filename;
+	char *alias;
 	int status;
 	char *cmd_path;
 	struct liststr_s *history;
+	int readfd;
 	int isatty;
 	int type;
 	pid_t pid;
@@ -244,8 +250,8 @@ char *find_command_path(info_t *, char *, char *);
 int loophsh(char **);
 
 /* Function prototypes for error_handling.c */
-void error_puts(char *);
-int error_putchar(char);
+void _eputs(char *);
+int _eputchar(char);
 int putfd(char c, int fd);
 int puts_fd(char *str, int fd);
 
@@ -336,7 +342,7 @@ int renumber_history_list(info_t *info);
 /* Function prototypes for linkedlist.c */
 list_t *add_node_list(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
-size_t print_lists(const list_t *);
+size_t print_liststr(const list_t *);
 int delete_node_at_idx(list_t **, unsigned int);
 void free_linked_list(list_t **);
 

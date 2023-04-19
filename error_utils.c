@@ -38,7 +38,7 @@ void print_error(info_t *info, char *error_type)
 {
 	_eputs(info->filename);
 	_eputs(": ");
-	print_d(info->line_number, STDERR_FILENO);
+	print_digits(info->line_number, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");

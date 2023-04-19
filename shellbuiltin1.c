@@ -1,4 +1,4 @@
-#include "'myshell.h"
+#include "myshell.h"
 
 /**
  * past - prints the history list, one command by line, preceded
@@ -9,8 +9,8 @@
  */
 int past(info_t *info)
 {
-    /* Call print_list to display the history */
-	print_list(info->history);
+    /* Call print_lists to display the history */
+	print_lists(info->history);
 	return (0);
 }
 
@@ -27,13 +27,13 @@ int unset_alias(info_t *info, char *str)
 	char *equal_sign_pos, temp;
 	int ret;
 
-	equal_sign_pos = _strchr(str, '=');
+	equal_sign_pos = strchr(str, '=');
 	if (!equal_sign_pos)
 		return (1);
 	temp = *equal_sign_pos;
 	*equal_sign_pos = 0;
 	ret = delete_node_at_idx(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+		get_node_idx(info->alias, find_node_starts(info->alias, str, -1)));
 	*equal_sign_pos = temp;
 	return (ret);
 }
@@ -94,7 +94,7 @@ int nickname(info_t *info)
 	char *p = NULL;
 	list_t *node = NULL;
 
-	if (info->argc == 1)
+	if (info->args == 1)
 	{
 		node = info->alias;
 		while (node)
@@ -110,7 +110,7 @@ int nickname(info_t *info)
 		if (p)
 			set_alias(info, info->argv[i]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+			print_alias(find_node_starts(info->alias, info->argv[i], '='));
 	}
 
 	return (0);

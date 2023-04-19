@@ -75,12 +75,12 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 }
 
 /**
-* print_lists - prints only the string element of a list_t linked list
+* print_liststr - prints only the string element of a list_t linked list
 * @head: pointer to the first node of the list
 *
 * Return: the size of the list
 */
-size_t print_lists(const list_t *head)
+size_t print_liststr(const list_t *head)
 {
 	size_t count = 0;
 
