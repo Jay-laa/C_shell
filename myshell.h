@@ -271,8 +271,8 @@ char **strtow(char *, char *);
 char **strtow2(char *, char);
 
 /* Function prototypes for reallocation_functions.c */
-char *_memset(char *, char, unsigned int n);
-void free_tokens(char **);
+char *_memset2(char *, char, unsigned int n);
+void free_strings(char **);
 void *realloc_array(void *, unsigned int, unsigned int);
 
 /* Function prototypes for memory.c */
@@ -292,15 +292,15 @@ char *to_string(long int, int, int);
 void remove_comments(char *);
 
 /* Function prototypes for shellbuiltins.c */
-int quit(info_t *);
-int chd(info_t *);
-int info(info_t *);
+int halt(info_t *);
+int change(info_t *);
+int assist(info_t *);
 
 /* Function prototypes for shellbuiltins1.c */
-int log_(info_t *);
+int past(info_t *);
 int unset_alias(info_t *, char *);
 int set_alias(info_t *, char *);
-int shortcut(info_t *);
+int nickname(info_t *);
 
 /* Function prototypes for lineinput.c */
 ssize_t get_input(info_t *, char **, size_t *);
@@ -315,10 +315,10 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* Function prototypes for envvars.c */
-int vars(info_t *);
+int context(info_t *);
 char *getenv_(info_t *, const char *);
-int export_(info_t *);
-int unexport_(info_t *);
+int assign(info_t *);
+int unassign(info_t *);
 int populate_envvar(info_t *);
 
 /* Function prototypes for getenv.c */

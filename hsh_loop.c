@@ -55,15 +55,17 @@ int start_hsh(info_t *info, char **av)
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
-	builtin_table builtin_table[] = {
-		{"exit", quit},
-		{"env", vars},
-		{"help", info},
-		{"history", log_},
-		{"setenv", export_},
-		{"unsetenv", unexport_},
-		{"cd", chd},
-		{"alias", shortcut},
+
+	builtin_table builtin_table[] =
+	{
+		{"exit", halt},
+		{"env", context},
+		{"help", assist},
+		{"history", past},
+		{"setenv", assign},
+		{"unsetenv", unassign},
+		{"cd", change},
+		{"alias", nickname},
 		{NULL, NULL}
 	};
 
@@ -89,6 +91,7 @@ int find_builtin(info_t *info)
  *
  * Return: void
  */
+
 void find_cmd(info_t *info)
 {
 	char *cmd_path = NULL;
@@ -103,7 +106,7 @@ void find_cmd(info_t *info)
 	}
 
 	for (index = 0, arg_count = 0; info->args[index]; index++)
-		if (!is_delimiter(info->args)char *[index], " \t\n")
+		if (!is_delimiter(info->args), char *[index], " \t\n")
 			arg_count++;
 
 	/* If there are no arguments, return */

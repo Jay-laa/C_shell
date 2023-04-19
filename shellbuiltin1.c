@@ -1,13 +1,13 @@
 #include "'myshell.h"
 
 /**
- * log_ - prints the history list, one command by line, preceded
+ * past - prints the history list, one command by line, preceded
  * with line numbers, starting at 0.
  * @info: Structure containing potential arguments.
  *
  * Return: Always 0
  */
-int log_(info_t *info)
+int past(info_t *info)
 {
     /* Call print_list to display the history */
 	print_list(info->history);
@@ -32,7 +32,7 @@ int unset_alias(info_t *info, char *str)
 		return (1);
 	temp = *equal_sign_pos;
 	*equal_sign_pos = 0;
-	ret = delete_node_at_index(&(info->alias),
+	ret = delete_node_at_idx(&(info->alias),
 		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
 	*equal_sign_pos = temp;
 	return (ret);
@@ -83,12 +83,12 @@ int print_alias(list_t *alias_node)
 }
 
 /**
- * shortcut - mimics the alias builtin (man alias)
+ * nickname - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * Return: Always 0
  */
-int shortcut(info_t *info)
+int nickname(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;
