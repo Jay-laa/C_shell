@@ -6,10 +6,10 @@
 */
 void clear_info(info_t *info)
 {
-	info->arg = NULL;
+	info->args = NULL;
 	info->argv = NULL;
 	info->path = NULL;
-	info->argc = 0;
+	info->args = 0;
 }
 
 /**
@@ -21,24 +21,24 @@ void set_info(info_t *info, char **av)
 {
 	int arg_count = 0;
 
-	info->fname = av[0];
-	if (info->arg)
+	info->filename = av[0];
+	if (info->args)
 	{
-		info->argv = strtow(info->arg, " \t");
+		info->argv = strtow((char *) info->args, " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
 			if (info->argv)
 			{
-				info->argv[0] = _strdup(info->arg);
+				info->argv[0] = strdup((char *) info->args);
 				info->argv[1] = NULL;
 			}
 		}
 	for (arg_count = 0; info->argv && info->argv[arg_count]; arg_count++)
-		info->argc = arg_count;
+		info->args = arg_count;
 
 		replace_alias(info);
-		replace_vars(info);
+		replace_variables(info);
 	}
 }
 
@@ -49,25 +49,25 @@ void set_info(info_t *info, char **av)
 */
 void free_info(info_t *info, int all)
 {
-	free_tokens(info->argv);
+	free_strings(info->argv);
 	info->argv = NULL;
 	info->path = NULL;
 
 	if (all)
 	{
 	if (!info->cmd_buf)
-	free(info->arg);
+	free(info->args);
 	if (info->env)
-	free_list(&(info->env));
+	free_linked_list(&(info->env));
 	if (info->history)
-	free_list(&(info->history));
+	free_linked_list(&(info->history));
 	if (info->alias)
-	free_list(&(info->alias));
+	free_linked_list(&(info->alias));
 
-	free_tokens(info->environ);
+	free_strings(info->environ);
 	info->environ = NULL;
 
-	free_buffer((void **)info->cmd_buf);
+	free_ptr((void **)info->cmd_buf);
 
 	if (info->readfd > 2)
 	close(info->readfd);

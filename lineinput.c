@@ -17,11 +17,11 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 	{
 		free(*buffer);
 		*buffer = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, sigint_handler);
 #if USE_GETLINE
 		bytes_read = getline(buffer, &size_p, stdin);
 #else
-		bytes_read = _getline(info, buffer, &size_p);
+		bytes_read = get_line(info, buffer, &size_p);
 #endif
 		if (bytes_read > 0)
 		{
@@ -32,10 +32,10 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 			}
 			info->linecount_flag = 1;
 			remove_comments(*buffer);
-			build_history_list(info, *buffer, info->histcount++);
+			add_to_history(info, *buffer, info->histcount++);
 			{
 				*buffer_size = bytes_read;
-				info->cmd_buf = buffer;
+				info->cmd_buf = *buffer;
 			}
 		}
 	}
@@ -48,16 +48,16 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 *
 * Return: number of bytes read
 */
-ssize_t get_line(info_t *info)
+ssize_t getlinE(info_t *info)
 {
 	static char *chain_buf;
 	static size_t chain_start, chain_end, chain_len;
 	ssize_t bytes_read = 0;
-	char **arg_ptr = &(info->arg), *command_start;
+	char **args_ptr = (info->args), *command_start;
 
 	_putchar(BUF_FLUSH);
 
-	bytes_read = input_buffer(info, &chain_buf, &chain_len);
+	bytes_read = get_input(info, &chain_buf, &chain_len);
 	if (bytes_read == -1) /* EOF */
 		return (-1);
 
@@ -66,11 +66,11 @@ ssize_t get_line(info_t *info)
 		chain_end = chain_start; /* init new iterator to current buf position */
 		command_start = chain_buf + chain_start;
 
-		check_command_chain(info, chain_buf, &chain_end, chain_start, chain_len);
+		check_var_chain(info, chain_buf, &chain_end, chain_start, chain_len);
 
 		while (chain_end < chain_len) /* iterate to semicolon or end */
 		{
-			if (is_command_chain(info, chain_buf, &chain_end))
+			if (var_chain(info, chain_buf, &chain_end))
 				break;
 			chain_end++;
 		}
@@ -82,23 +82,23 @@ ssize_t get_line(info_t *info)
 			info->cmd_buf_type = CMD_NORM;
 		}
 
-		*arg_ptr = command_start;
-		return (_strlen(command_start));
+		*args_ptr = command_start;
+		return (strlen(command_start));
 	}
 
-	*arg_ptr = chain_buf;
+	*args_ptr = chain_buf;
 	return (bytes_read);
 }
 
 /**
-* read_buf - reads data from a file descriptor into a buffer
+* read_buffer - reads data from a file descriptor into a buffer
 * @info: pointer to the parameter struct
 * @buffer: pointer to the buffer
 * @buffer_size: pointer to the size of the buffer
 *
 * Return: number of bytes read
 */
-ssize_t read_buf(info_t *info, char *buffer, size_t *buffer_size)
+ssize_t read_buffer(info_t *info, char *buffer, size_t *buffer_size)
 {
 	ssize_t bytes_read = 0;
 
@@ -134,23 +134,23 @@ int get_line(info_t *info, char **buffer, size_t *buf_size)
 	if (read_buf_start == read_buf_end)
 		read_buf_start = read_buf_end = 0;
 
-	read_result = read_buf(info, read_buf, &read_buf_end);
+	read_result = read_buffer(info, read_buf, &read_buf_end);
 	if (read_result == -1 || (read_result == 0 && read_buf_end == 0))
 		return (-1);
 
-	end_of_line = _strchr(read_buf + read_buf_start, '\n');
+	end_of_line = strchr(read_buf + read_buf_start, '\n');
 	line_size = end_of_line ? 1 + (unsigned int)
 		(end_of_line - read_buf) : read_buf_end;
-	new_line = _realloc(line, line_len,
-			line_len ? line_len + line_size : line_size + 1);
+	new_line = realloc(line, line_len);
+
 	if (!new_line) /* MALLOC FAILURE! */
 		return (line ? free(line), -1 : -1);
 
 	if (line_len)
-		_strncat(new_line, read_buf + read_buf_start,
+		strncat(new_line, read_buf + read_buf_start,
 				line_size - read_buf_start);
 	else
-		_strncpy(new_line, read_buf + read_buf_start,
+		strncpy(new_line, read_buf + read_buf_start,
 				line_size - read_buf_start + 1);
 
 	line_len += line_size - read_buf_start;
@@ -169,7 +169,7 @@ int get_line(info_t *info, char **buffer, size_t *buf_size)
 *
 * Return: void
 */
-void sigint_handler(_attribute_((unused)) int sig_num)
+void sigint_handler(__attribute__((unused)) int sig_num)
 {
 	_puts("\033[0;31m\n"); /* set color to red */
 	_puts("$ ");

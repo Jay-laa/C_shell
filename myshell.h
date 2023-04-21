@@ -126,10 +126,15 @@ typedef struct liststr_s
  * the shell is running in interactive mode
  * @line_count: the error count
  * @alias: alternate name
+ * @environ: pass information between processes
+ * @path: a string path for the current command
  * @history: the list of command history
+ * @histcount: the history line number count
+ * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
  * @isatty: whether the shell is attached to a terminal
  * @readfd: file descriptor used for reading data from a file
  * @pid: the process ID of the shell
+ * @cmd_buf_type: the type of command chaining (||, &&, or ;)
  * @line_number: holds the line number where an error occurred
  * @input_fd: the file descriptor for input
  * @output_fd: the file descriptor for output
@@ -139,18 +144,23 @@ typedef struct info_s
 	char **args;
 	char *cmd_name;
 	char **env;
+	char *path;
 	int linecount_flag;
 	int line_count;
 	int line_number;
 	char *filename;
 	char *alias;
 	int status;
+	char *cmd_buf;
+	int histcount;
 	char *cmd_path;
 	struct liststr_s *history;
 	int readfd;
 	int isatty;
 	int type;
 	pid_t pid;
+	char **environ;
+	int cmd_buf_type;
 	int input_fd;
 	int output_fd;
 	char **argv;
@@ -246,9 +256,6 @@ int is_command(info_t *, char *);
 char *duplicate_chars(char *, int, int);
 char *find_command_path(info_t *, char *, char *);
 
-/* Function prototypes for loophsh.c */
-int loophsh(char **);
-
 /* Function prototypes for error_handling.c */
 void _eputs(char *);
 int _eputchar(char);
@@ -311,7 +318,7 @@ int nickname(info_t *);
 /* Function prototypes for lineinput.c */
 ssize_t get_input(info_t *, char **, size_t *);
 ssize_t getlinE(info_t *);
-ssize_t read_buf(info_t *, char **, size_t *);
+ssize_t read_buffer(info_t *, char *, size_t *);
 int get_line(info_t *, char **, size_t *);
 void sigint_handler(int);
 

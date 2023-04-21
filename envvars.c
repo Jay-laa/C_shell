@@ -8,7 +8,7 @@
 */
 int context(info_t *info)
 {
-	print_list_str(info->env);
+	print_liststr(info->env);
 	return (0);
 }
 /**
@@ -44,7 +44,7 @@ char *getenv_(info_t *info, const char *name)
 */
 int assign(info_t *info)
 {
-	if (info->argc != 3)
+	if (info->args != 3)
 	{
 		_eputs("Incorrect number of arguments\n");
 		return (1);
@@ -65,12 +65,12 @@ int unassign(info_t *info)
 {
 	int i;
 
-	if (info->argc == 1)
+	if (info->args == 1)
 	{
 		_eputs("Missing arguments. Please specify one or more env var to remove.\n");
 		return (1);
 	}
-	for (i = 1; i < info->argc; i++)
+	for (i = 1; i < info->args; i++)
 		unassign(info, info->argv[i]);
 
 	return (0);
