@@ -2,13 +2,12 @@
 #define MYSHELL_H
 
 /*
- * myshell_h - Header file for myshell
- * Contains all function prototypes, structures, and macros for myshell.
- * This shell supports input and output redirection, piping, and background
- * processes. Built-in commands include cd, exit, env, setenv, and unsetenv.
- *
- * Authors: Joy Emojorho and John Ebhohimen
- */
+* myshell_h - Header file for myshell
+* Contains all function prototypes, structures, and macros for myshell.
+* This shell supports input and output redirection, piping, and background
+* processes. Built-in commands include cd, exit, env, setenv, and unsetenv.
+* Authors: Joy Emojorho and John Ebhohimen
+*/
 
 /* Libraries */
 #include <stdio.h>
@@ -39,18 +38,18 @@
 #define BUF_FLUSH -1
 
 /*
- * command chaining is used to execute multiple commands
- * sequentially or conditionally
- */
+* command chaining is used to execute multiple commands
+* sequentially or conditionally
+*/
 #define CMD_NORM	0	/* Normal command */
 #define CMD_OR		1	/* Command with "or" condition */
 #define CMD_AND		2	/* Command with "and" condition */
 #define CMD_CHAIN	3	/* Command chaining */
 
 /*
- * convert a string to a number
- * convert letters to lowercase or treat the number as unsigned
- */
+* convert a string to a number
+* convert letters to lowercase or treat the number as unsigned
+*/
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
@@ -63,23 +62,23 @@
 #define HIST_MAX	4096
 
 /*
- * Environment variables: an external variable
- * that contains the environment variables of the shell
- */
+* Environment variables: an external variable
+* that contains the environment variables of the shell
+*/
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
 /* Struct declarations */
 
 /*
- * struct list_s - contains singly linked list
- * @str: a string
- * @number: the integer field
- * @next: points to the next node
- *
- * Description: This struct represents a node in a singly linked list
- * of strings and integers
- */
+* struct list_s - contains singly linked list
+* @str: a string
+* @number: the integer field
+* @next: points to the next node
+*
+* Description: This struct represents a node in a singly linked list
+* of strings and integers
+*/
 typedef struct list_s
 {
 	char *str;
@@ -89,19 +88,16 @@ typedef struct list_s
 
 
 /*
- * struct liststr_s -  represents a node in a singly linked list of strings
- *
- * @number: the integer field
- * @str: a string
- * @next_node: points to the next node
- *
- *
- * Description: This structure represents a node in a singly linked list of
- * strings and integers. It contains an integer value, a string value, and a
- * pointer to the next node in the list. This structure is used to implement
- * history functionality in the shell, where each command entered by the user
- * is stored in a linked list for later retrieval.
- */
+* struct liststr_s -  represents a node in a singly linked list of strings
+* @number: the integer field
+* @str: a string
+* @next_node: points to the next node
+* Description: This structure represents a node in a singly linked list of
+* strings and integers. It contains an integer value, a string value, and a
+* pointer to the next node in the list. This structure is used to implement
+* history functionality in the shell, where each command entered by the user
+* is stored in a linked list for later retrieval.
+*/
 typedef struct liststr_s
 {
 	int number;
@@ -110,36 +106,35 @@ typedef struct liststr_s
 } liststr;
 
 /**
- * struct info_s - holds information about the shell
- *
- * @args: the command line arguments
- * @cmd_name: The name of the command being executed
- * @env: the environment variables
- * @linecount_flag: A flag indicating whether to display line count for history
- * @filename: The name of the file to read commands from if not stdin.
- * @status: the exit status of the last command
- * @cmd_path: The full path to the command being executed.
- * @type: The type of command entered (built-in or external)
- * @argv: An array of strings representing the command line arguments.
- * @err_num: The error number
- * @interactive: A flag indicating whether
- * the shell is running in interactive mode
- * @line_count: the error count
- * @alias: alternate name
- * @environ: pass information between processes
- * @path: a string path for the current command
- * @env_changed: on if environment variables were changed
- * @history: the list of command history
- * @histcount: the history line number count
- * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
- * @isatty: whether the shell is attached to a terminal
- * @readfd: file descriptor used for reading data from a file
- * @pid: the process ID of the shell
- * @cmd_buf_type: the type of command chaining (||, &&, or ;)
- * @line_number: holds the line number where an error occurred
- * @input_fd: the file descriptor for input
- * @output_fd: the file descriptor for output
- */
+* struct info_s - holds information about the shell
+* @args: the command line arguments
+* @cmd_name: The name of the command being executed
+* @env: the environment variables
+* @linecount_flag: A flag indicating whether to display line count for history
+* @filename: The name of the file to read commands from if not stdin.
+* @status: the exit status of the last command
+* @cmd_path: The full path to the command being executed.
+* @type: The type of command entered (built-in or external)
+* @argv: An array of strings representing the command line arguments.
+* @err_num: The error number
+* @interactive: A flag indicating whether
+* the shell is running in interactive mode
+* @line_count: the error count
+* @alias: alternate name
+* @environ: pass information between processes
+* @path: a string path for the current command
+* @env_changed: on if environment variables were changed
+* @history: the list of command history
+* @histcount: the history line number count
+* @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
+* @isatty: whether the shell is attached to a terminal
+* @readfd: file descriptor used for reading data from a file
+* @pid: the process ID of the shell
+* @cmd_buf_type: the type of command chaining (||, &&, or ;)
+* @line_number: holds the line number where an error occurred
+* @input_fd: the file descriptor for input
+* @output_fd: the file descriptor for output
+*/
 typedef struct info_s
 {
 	char **args;
@@ -173,12 +168,12 @@ typedef struct info_s
 
 
 /**
- * struct builtin - Searches for built-in commands and executes them
- * @cmd_name: The name of the built-in command
- * @type: The type of the built-in command (e.g. "exit", "env")
- * @func: A pointer to the function that executes the built-in command
- * @cmd_func: A pointer to the function that validates the built-in command
- */
+* struct builtin - Searches for built-in commands and executes them
+* @cmd_name: The name of the built-in command
+* @type: The type of the built-in command (e.g. "exit", "env")
+* @func: A pointer to the function that executes the built-in command
+* @cmd_func: A pointer to the function that validates the built-in command
+*/
 typedef struct builtin
 {
 	char *cmd_name;
@@ -189,26 +184,26 @@ typedef struct builtin
 
 
 /**
- * struct cmd_info - contains information about a command
- * @arg_str: a string generated from getline containing arguments
- * @args: an array of strings generated from arg_str
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on, count this line of input
- * @fname: the program filename
- * @local_env: linked list local copy of the environment variables
- * @history: the history node
- * @alias: the alias node
- * @envp: custom modified copy of the envir var from the LL local_env
- * @env_changed: on if environment variables were changed
- * @status: the return status of the last exec'd command
- * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
- * @cmd_buf_type: the type of command chaining (||, &&, or ;)
- * @readfd: the fd from which to read line input
- * @histcount: the history line number count
- */
+* struct cmd_info - contains information about a command
+* @arg_str: a string generated from getline containing arguments
+* @args: an array of strings generated from arg_str
+* @path: a string path for the current command
+* @argc: the argument count
+* @line_count: the error count
+* @err_num: the error code for exit()s
+* @linecount_flag: if on, count this line of input
+* @fname: the program filename
+* @local_env: linked list local copy of the environment variables
+* @history: the history node
+* @alias: the alias node
+* @envp: custom modified copy of the envir var from the LL local_env
+* @env_changed: on if environment variables were changed
+* @status: the return status of the last exec'd command
+* @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
+* @cmd_buf_type: the type of command chaining (||, &&, or ;)
+* @readfd: the fd from which to read line input
+* @histcount: the history line number count
+*/
 typedef struct cmd_info
 {
 	char *arg_str;
