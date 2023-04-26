@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 			if (errno == ENOENT)
 			{
 				_eputs(argv[0]);
-				_eputs(": 0: Can't open ");
+				_eputs(": 0: Cannot open ");
 				_eputs(argv[1]);
 				_eputchar('\n');
 				_eputchar(BUF_FLUSH);

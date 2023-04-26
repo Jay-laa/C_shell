@@ -139,5 +139,5 @@ int renumber_history_list(info_t *info)
 		current_node->number = count++;
 		current_node = current_node->next;
 	}
-return (info->histcount = count);i
+	return (info->histcount = count);
 }

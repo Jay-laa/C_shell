@@ -46,7 +46,7 @@ int set_alias(info_t *info, char *alias_str)
 {
 	char *equal_sign_pos;
 
-	equal_sign_pos = _strchr(alias_str, '=');
+	equal_sign_pos = string_find_char(alias_str, '=');
 	if (!equal_sign_pos)
 		return (1);
 	if (!*++equal_sign_pos)
@@ -67,7 +67,7 @@ int print_alias(list_t *alias_node)
 
 	if (alias_node)
 	{
-		equal_sign_pos = _strchr(alias_node->str, '=');
+		equal_sign_pos = string_find_char(alias_node->str, '=');
 for (alias_str = alias_node->str; alias_str <= equal_sign_pos; alias_str++)
 			_putchar(*alias_str);
 		_putchar('\'');
@@ -90,7 +90,7 @@ int nickname(info_t *info)
 	char *p = NULL;
 	list_t *node = NULL;
 
-	if (info->args == 1)
+	if (info->argc == 1)
 	{
 		node = info->alias;
 		while (node)
@@ -102,7 +102,7 @@ int nickname(info_t *info)
 	}
 	for (i = 1; info->argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], '=');
+		p = string_find_char(info->argv[i], '=');
 		if (p)
 			set_alias(info, info->argv[i]);
 		else
