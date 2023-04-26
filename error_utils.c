@@ -1,11 +1,11 @@
 #include "myshell.h"
 
 /**
- * err_to_integer - converts a string to an integer with error checking
- * @s: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
- */
+* err_to_integer - converts a string to an integer with error checking
+* @s: the string to be converted
+* Return: 0 if no numbers in string, converted number otherwise
+*       -1 on error
+*/
 int err_to_integer(char *s)
 {
 	int idx = 0;
@@ -29,11 +29,11 @@ int err_to_integer(char *s)
 }
 
 /**
- * print_error - prints an error message to standard error
- * @info: a pointer to the parameter and return information structure
- * @error_type: string containing error type to be printed
- * Return: void
- */
+* print_error - prints an error message to standard error
+* @info: a pointer to the parameter and return information structure
+* @error_type: string containing error type to be printed
+* Return: void
+*/
 void print_error(info_t *info, char *error_type)
 {
 	_eputs(info->filename);
@@ -46,12 +46,11 @@ void print_error(info_t *info, char *error_type)
 }
 
 /**
- * print_digits - function prints a decimal (integer) number (base 10)
- * @num: the number to print
- * @fd: the file descriptor to write to
- *
- * Return: number of characters printed
- */
+* print_digits - function prints a decimal (integer) number (base 10)
+* @num: the number to print
+* @fd: the file descriptor to write to
+* Return: number of characters printed
+*/
 int print_digits(int num, int fd)
 {
 	int (*__putchar)(char) = _putchar;
@@ -84,13 +83,12 @@ int print_digits(int num, int fd)
 	return (char_count);
 }
 /**
- * to_string- converts a number to a string in the specified base
- * @n: the number to convert
- * @b: the base to use for conversion
- * @f: flags to modify conversion behavior
- *
- * Return: pointer to resulting string
- */
+* to_string- converts a number to a string in the specified base
+* @n: the number to convert
+* @b: the base to use for conversion
+* @f: flags to modify conversion behavior
+* Return: pointer to resulting string
+*/
 char *to_string(long int n, int b, int f)
 {
 	static char *a;
@@ -120,11 +118,10 @@ char *to_string(long int n, int b, int f)
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @str: address of the string to modify
- *
- * Return: Always 0;
- */
+* remove_comments - function replaces first instance of '#' with '\0'
+* @str: address of the string to modify
+* Return: Always 0;
+*/
 void remove_comments(char *str)
 {
 	int idx;
