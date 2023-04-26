@@ -1,11 +1,11 @@
 #include "myshell.h"
 
 /**
- * **strtow- splits a string into words. Repeat delimiters are ignored
- * @string: the input string
- * @delim: the delimeter string
- * Return: a pointer to an array of strings, or NULL on failure
- */
+* **strtow- splits a string into words. Repeat delimiters are ignored
+* @string: the input string
+* @delim: the delimeter string
+* Return: a pointer to an array of strings, or NULL on failure
+*/
 char **strtow(char *string, char *delim)
 {
 	int i, j, k, m, num_words = 0;
@@ -16,7 +16,7 @@ char **strtow(char *string, char *delim)
 	if (!delim)
 		delim = " ";
 	for (i = 0; string[i] != '\0'; i++)
-		if (!is_delimiter(string[i], delim) && (is_delimiter(string[i + 1],
+	if (!is_delimiter(string[i], delim) && (is_delimiter(string[i + 1],
 						delim) || !string[i + 1]))
 			num_words++;
 
@@ -49,11 +49,11 @@ char **strtow(char *string, char *delim)
 }
 
 /**
- * **strtow2 - splits a string into words
- * @str: the input string
- * @delim: the delimiter character
- * Return: a pointer to an array of strings, or NULL on failure
- */
+* **strtow2 - splits a string into words
+* @str: the input string
+* @delim: the delimiter character
+* Return: a pointer to an array of strings, or NULL on failure
+*/
 char **strtow2(char *str, char delim)
 {
 	int i, j, k, m, num_words = 0;

@@ -3,7 +3,6 @@
 /**
 * interactive - returns true if shell is in interactive mode
 * @info: pointer to struct containing shell information
-*
 * Return: 1 if interactive mode, 0 otherwise
 */
 int interactive(info_t *info)
@@ -15,7 +14,6 @@ int interactive(info_t *info)
 * is_delimiter - checks if character is a delimiter
 * @ch: the character to check
 * @delim: the delimiter string
-*
 * Return: 1 if true, 0 if false
 */
 int is_delimiter(char **ch, char *delim)
@@ -45,7 +43,6 @@ int is_alpha(int ch)
 /**
 * to_integer - converts a string to an integer
 * @s: the string to be converted
-*
 * Return: 0 if no numbers in string, converted number otherwise
 */
 

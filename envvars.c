@@ -15,7 +15,6 @@ int context(info_t *info)
 * getenv_ - gets the value of an environment variable
 * @info: Structure containing information about the shell
 * @name: Name of the environment variable
-*
 * Return: Pointer to the value of the environment variable if found,
 * otherwise NULL.
 */
@@ -39,7 +38,6 @@ char *getenv_(info_t *info, const char *name)
 *             or modify an existing one
 * @info: Structure containing potential arguments.
 *        Used to maintain constant function prototype.
-*
 * Return: Always 0.
 */
 int assign(info_t *info)
@@ -58,7 +56,6 @@ int assign(info_t *info)
 * unassign - Remove an environment variable
 * @info: Structure containing command arguments and environment variables
 * Used to maintain constant function prototype.
-*
 * Return: Always 0
 */
 int unassign(info_t *info)
@@ -79,10 +76,8 @@ int unassign(info_t *info)
 /**
 * populate_envvar - populates environment linked list
 * @info: Structure containing potential arguments
-*
 * This function populates the environment linked list with the current
 * environment variables.
-*
 * Return: Always 0
 */
 int populate_envvar(info_t *info)

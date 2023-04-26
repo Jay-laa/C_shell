@@ -3,7 +3,6 @@
 /**
 * get_environ - Returns a copy of the string array containing environment variables
 * @info: Pointer to struct containing shell info
-*
 * Return: Always 0
 */
 char **get_environ(info_t *info)
@@ -38,7 +37,7 @@ int _unsetenv(info_t *info, char *var)
 		p = starts_with(curr_node->str, var);
 		if (p && *p == '=')
 		{
-			info->env_changed = delete_node_at_idx(&(info->env), index);
+		info->env_changed = delete_node_at_idx(&(info->env), index);
 			index = 0;
 			curr_node = info->env;
 			continue;
@@ -56,7 +55,7 @@ int _unsetenv(info_t *info, char *var)
 * constant function prototype.
 * @variable: the string env var property
 * @value: the string env var value
-*  Return: Always 0
+* Return: Always 0
 */
 int _setenv(info_t *info, char *variable, char *value)
 {

@@ -1,4 +1,4 @@
-0x16. C - Simple Shell
+\\0x16. C - Simple Shell\\
 
 This is a simple shell program written in C language. It can execute commands entered by the user and display their output. It supports basic features like command execution, piping,system call, bit manipulation, file managment, error handling ...
 Shell is a simple UNIX command interpreter that replicates functionalities of the simple shell (sh).

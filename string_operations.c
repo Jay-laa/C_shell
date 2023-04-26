@@ -1,13 +1,12 @@
 #include "myshell.h"
 
 /**
- * string_copy_n - copies a string from source to destination
- * @destination: the destination string to be copied to
- * @source: the source string to copy from
- * @count: the number of characters to be copied
- *
- * Return: the concatenated string
- */
+* string_copy_n - copies a string from source to destination
+* @destination: the destination string to be copied to
+* @source: the source string to copy from
+* @count: the number of characters to be copied
+* Return: the concatenated string
+*/
 char *string_copy_n(char *destination, char *source, int count)
 {
 	int i, j;
@@ -32,13 +31,13 @@ char *string_copy_n(char *destination, char *source, int count)
 }
 
 /**
- * string_concatenate - Concatenates two strings
- * @destination: The first string to be concatenated
- * @source: The second string to concatenate to the first string
- * @count: The maximum number of bytes to concatenate from the second string
- *
- * Return: The concatenated string
- */
+* string_concatenate - Concatenates two strings
+* @destination: The first string to be concatenated
+* @source: The second string to concatenate to the first string
+* @count: The maximum number of bytes to concatenate from the second string
+*
+* Return: The concatenated string
+*/
 char *string_concatenate(char *destination, char *source, int count)
 {
 	int dest_len = 0, src_len = 0;
@@ -60,12 +59,11 @@ char *string_concatenate(char *destination, char *source, int count)
 }
 
 /**
- * string_find_char - Locates a character in a string
- * @string: The string to be searched
- * @target: The character to look for
- *
- * Return: A pointer to the memory area containing the character
- */
+* string_find_char - Locates a character in a string
+* @string: The string to be searched
+* @target: The character to look for
+* Return: A pointer to the memory area containing the character
+*/
 char *string_find_char(char *string, char target)
 {
 	do {

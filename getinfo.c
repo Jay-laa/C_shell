@@ -4,6 +4,7 @@
 * clear_info - initializes fields of the info_t struct to NULL
 * @info: pointer to the info_t struct to be initialized
 */
+
 void clear_info(info_t *info)
 {
 	info->args = NULL;
@@ -17,6 +18,7 @@ void clear_info(info_t *info)
 * @info: pointer to the info_t struct to initialize
 * @av: pointer to an array of strings containing command-line arguments
 */
+
 void set_info(info_t *info, char **av)
 {
 	int arg_count = 0;
@@ -48,6 +50,7 @@ void set_info(info_t *info, char **av)
 * @info: pointer to the info_t struct
 * @all: true if freeing all fields, false otherwise
 */
+
 void free_info(info_t *info, int all)
 {
 	free_strings(info->argv);

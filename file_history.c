@@ -108,7 +108,6 @@ int read_history_file(info_t *info)
 * @info: Structure containing potential arguments.
 * @entry: buffer
 * @line_count: the history linecount, histcount
-*
 * Return: Always 0
 */
 int add_to_history(info_t *info, char *entry, int line_count)
@@ -140,5 +139,5 @@ int renumber_history_list(info_t *info)
 		current_node->number = count++;
 		current_node = current_node->next;
 	}
-	return (info->histcount = count);
+return (info->histcount = count);i
 }
