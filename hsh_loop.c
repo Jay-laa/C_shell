@@ -56,8 +56,7 @@ int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 
-	builtin_table builtin_table[] =
-	{
+	builtin_table builtin_table[] = {
 		{"exit", halt},
 		{"env", context},
 		{"help", assist},
