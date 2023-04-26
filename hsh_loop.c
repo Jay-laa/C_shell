@@ -2,7 +2,7 @@
 
 /**
  * start_hsh - main shell loop
- * @info: pointer to the info_t struct containing info about the shell
+ * @info: pointer to & return info struct
  * @av: array of arguments from main()
  *
  * Return: 0 on success, 1 on error, or an error code
@@ -17,7 +17,7 @@ int start_hsh(info_t *info, char **av)
 		clear_info(info);
 		if (interactive(info))
 			_puts("$ ");
-		_putchar(BUF_FLUSH);
+		_eputchar(BUF_FLUSH);
 		read_status = get_input(info, NULL, NULL);
 		if (read_status != -1)
 		{
@@ -56,7 +56,7 @@ int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 
-	builtin_table builtin_table[] = {
+	builtin_table builtin_tbl[] = {
 		{"exit", halt},
 		{"env", context},
 		{"help", assist},
@@ -68,12 +68,12 @@ int find_builtin(info_t *info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtin_table[i].type; i++)
+	for (i = 0; builtin_tbl[i].type; i++)
 	{
-		if (_strcmp(info->argv[0], builtin_table[i].type) == 0)
+		if (_strcmp(info->argv[0], builtin_tbl[i].type) == 0)
 		{
 			info->line_count++;
-			built_in_ret = builtin_table[i].func(info);
+			built_in_ret = builtin_tbl[i].func(info);
 			break;
 		}
 	}
@@ -104,15 +104,15 @@ void find_cmd(info_t *info)
 		info->linecount_flag = 0;
 	}
 
-	for (index = 0, arg_count = 0; info->args[index]; index++)
-		if (!is_delimiter(info->args[index], " \t\n"))
+	for (index = 0, arg_count = 0; info->arg[index]; index++)
+		if (!is_delimiter(&info->arg[index], " \t\n"))
 			arg_count++;
 
 	/* If there are no arguments, return */
 	if (!arg_count)
 		return;
 
-	cmd_path = find_path(info, getenv_(info, "PATH="), info->argv[0]);
+	cmd_path = find_command_path(info, getenv_(info, "PATH="), info->argv[0]);
 
 	if (cmd_path)
 	{
@@ -125,7 +125,7 @@ void find_cmd(info_t *info)
 		if ((interactive(info) || getenv_(info, "PATH=")
 			|| info->argv[0][0] == '/') && is_command(info, info->argv[0]))
 			fork_cmd(info);
-		else if (*(info->args) != '\n')
+		else if (**info->arg != '\n')
 		{
 			info->status = 127;
 			print_error(info, "Not Found\n");
@@ -147,7 +147,7 @@ void fork_cmd(info_t *info)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
+		perror("error");
 		return;
 	}
 	if (pid == 0)

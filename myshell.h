@@ -72,136 +72,37 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 /* Struct declarations */
 
 /*
- * struct list_s - contains singly linked list
+ * struct liststr - contains singly linked list
  * @str: a string
  * @number: the integer field
  * @next: points to the next node
  *
- * Description: This struct represents a node in a singly linked list
- * of strings and integers
  */
-typedef struct list_s
+typedef struct liststr
 {
 	char *str;
 	int number;
-	struct list_s *next;
+	struct liststr *next;
 } list_t;
 
-
-/*
- * struct liststr_s -  represents a node in a singly linked list of strings
- *
- * @number: the integer field
- * @str: a string
- * @next_node: points to the next node
- *
- *
- * Description: This structure represents a node in a singly linked list of
- * strings and integers. It contains an integer value, a string value, and a
- * pointer to the next node in the list. This structure is used to implement
- * history functionality in the shell, where each command entered by the user
- * is stored in a linked list for later retrieval.
- */
-typedef struct liststr_s
-{
-	int number;
-	char *str;
-	struct liststr_s *next_node;
-} liststr;
-
 /**
- * struct info_s - holds information about the shell
- *
- * @args: the command line arguments
- * @cmd_name: The name of the command being executed
- * @env: the environment variables
- * @linecount_flag: A flag indicating whether to display line count for history
- * @filename: The name of the file to read commands from if not stdin.
- * @status: the exit status of the last command
- * @cmd_path: The full path to the command being executed.
- * @type: The type of command entered (built-in or external)
- * @argv: An array of strings representing the command line arguments.
- * @err_num: The error number
- * @interactive: A flag indicating whether
- * the shell is running in interactive mode
- * @line_count: the error count
- * @alias: alternate name
- * @environ: pass information between processes
- * @path: a string path for the current command
- * @env_changed: on if environment variables were changed
- * @history: the list of command history
- * @histcount: the history line number count
- * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
- * @isatty: whether the shell is attached to a terminal
- * @readfd: file descriptor used for reading data from a file
- * @pid: the process ID of the shell
- * @cmd_buf_type: the type of command chaining (||, &&, or ;)
- * @line_number: holds the line number where an error occurred
- * @input_fd: the file descriptor for input
- * @output_fd: the file descriptor for output
- */
-typedef struct info_s
-{
-	char **args;
-	char *cmd_name;
-	list_t **env;
-	char *path;
-	int env_changed;
-	int linecount_flag;
-	int line_count;
-	int line_number;
-	char *filename;
-	char *alias;
-	int status;
-	char *cmd_buf;
-	int histcount;
-	char *cmd_path;
-	struct liststr_s *history;
-	int readfd;
-	int isatty;
-	int type;
-	pid_t pid;
-	char **environ;
-	int cmd_buf_type;
-	int input_fd;
-	int output_fd;
-	char **argv;
-	int err_num;
-	int interactive;
-
-} info_t;
-
-
-/**
- * struct builtin - Searches for built-in commands and executes them
- * @cmd_name: The name of the built-in command
- * @type: The type of the built-in command (e.g. "exit", "env")
- * @func: A pointer to the function that executes the built-in command
- * @cmd_func: A pointer to the function that validates the built-in command
- */
-typedef struct builtin
-{
-	char *cmd_name;
-	char *type;
-	int (*func)(info_t *);
-	int (*cmd_func)(info_t *);
-} builtin_t;
-
-
-/**
- * struct cmd_info - contains information about a command
+ * struct pass_info - contains information aboutthe shell
  * @arg_str: a string generated from getline containing arguments
- * @args: an array of strings generated from arg_str
+ * @arg: an array of strings generated from arg_str
  * @path: a string path for the current command
+ * @env: the environment variable
  * @argc: the argument count
+ * @cmd_path: The full path to the command being executed.
+ * @argv: An array of strings representing the command line arguments.
  * @line_count: the error count
  * @err_num: the error code for exit()s
- * @linecount_flag: if on, count this line of input
- * @fname: the program filename
+ * @environ: pass information between processes
+ * @linecount_flag: A flag indicating whether to display line count for history
+ * @filename: the program filename
  * @local_env: linked list local copy of the environment variables
  * @history: the history node
  * @alias: the alias node
- * @envp: custom modified copy of the envir var from the LL local_env
+ * @line_number: holds the line number where an error occurred
  * @env_changed: on if environment variables were changed
  * @status: the return status of the last exec'd command
  * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
@@ -209,27 +110,43 @@ typedef struct builtin
  * @readfd: the fd from which to read line input
  * @histcount: the history line number count
  */
-typedef struct cmd_info
+typedef struct pass_info
 {
 	char *arg_str;
-	char **args;
+	char *arg;
 	char *path;
+	list_t *env;
+	char *cmd_path;
 	int argc;
+	char **environ;
+	char **argv;
 	unsigned int line_count;
 	int err_num;
 	int linecount_flag;
-	char *fname;
+	char *filename;
 	list_t *local_env;
 	list_t *history;
 	list_t *alias;
-	char **envp;
+	int line_number;
 	int env_changed;
 	int status;
 	char **cmd_buf;	/* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type;
 	int readfd;
 	int histcount;
-} cmd_info_t;
+} info_t;
+
+/**
+ *struct builtin - Searches for built-in commands and executes it
+ *struct builtin - contains a builtin string and related function
+ *@type: the type of builtin command
+ *@func: the function that executes the builtin command
+ */
+typedef struct builtin
+{
+        char *type;
+        int (*func)(info_t *);
+} builtin_table;
 
 /* initialize struct info_t with NULLs and 0s */
 #define MY_INFO_INIT \
@@ -284,7 +201,7 @@ int free_ptr(void **);
 
 /* Function prototypes for integer.c */
 int interactive(info_t *);
-int is_delimiter(char **, char *);
+int is_delimiter(char, char *);
 int is_alpha(int);
 int to_integer(char *);
 
