@@ -51,7 +51,7 @@ ssize_t getlinE(info_t *info)
 	static char *chain_buf;
 	static size_t chain_start, chain_end, chain_len;
 	ssize_t bytes_read = 0;
-	char *buf_ptr = (info->arg), *command_start;
+	char *command_start;
 
 	_putchar(BUF_FLUSH);
 
@@ -80,11 +80,9 @@ ssize_t getlinE(info_t *info)
 			info->cmd_buf_type = CMD_NORM;
 		}
 
-		buf_ptr = command_start;
 		return (strlen(command_start));
 	}
 
-	buf_ptr = chain_buf;
 	return (bytes_read);
 }
 
