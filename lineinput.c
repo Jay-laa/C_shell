@@ -5,7 +5,6 @@
 * @info: parameter struct
 * @buffer: address of buffer
 * @buffer_size: address of len var
-*
 * Return: bytes read
 */
 ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
@@ -45,7 +44,6 @@ ssize_t get_input(info_t *info, char **buffer, size_t *buffer_size)
 /**
 * getlinE - reads user input from stdin
 * @info: struct containing shell info
-*
 * Return: number of bytes read
 */
 ssize_t getlinE(info_t *info)
@@ -63,10 +61,10 @@ ssize_t getlinE(info_t *info)
 
 	if (chain_len)
 	{
-		chain_end = chain_start; /* init new iterator to current buf position */
+	chain_end = chain_start; /* init new iterator to current buf position */
 		command_start = chain_buf + chain_start;
 
-		check_var_chain(info, chain_buf, &chain_end, chain_start, chain_len);
+	check_var_chain(info, chain_buf, &chain_end, chain_start, chain_len);
 
 		while (chain_end < chain_len) /* iterate to semicolon or end */
 		{
@@ -95,7 +93,6 @@ ssize_t getlinE(info_t *info)
 * @info: pointer to the parameter struct
 * @buffer: pointer to the buffer
 * @buffer_size: pointer to the size of the buffer
-*
 * Return: number of bytes read
 */
 ssize_t read_buffer(info_t *info, char *buffer, size_t *buffer_size)
@@ -117,7 +114,6 @@ ssize_t read_buffer(info_t *info, char *buffer, size_t *buffer_size)
 * @info: struct containing information about the current command
 * @buffer: address of pointer to buffer, preallocated or NULL
 * @buf_size: size of preallocated ptr buffer if not NULL
-*
 * Return: length of the string read, or -1 on failure
 */
 int get_line(info_t *info, char **buffer, size_t *buf_size)
@@ -166,7 +162,6 @@ int get_line(info_t *info, char **buffer, size_t *buf_size)
 /**
 * sigint_handler - handles the SIGINT signal, blocking CTRL-C
 * @sig_num: the signal number
-*
 * Return: void
 */
 void sigint_handler(__attribute__((unused)) int sig_num)
