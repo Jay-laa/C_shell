@@ -21,6 +21,7 @@ void set_info(info_t *info, char **av)
 {
 	int arg_count = 0;
 
+	info->env_changed = 0;
 	info->filename = av[0];
 	if (info->args)
 	{

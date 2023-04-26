@@ -15,13 +15,13 @@ char *get_history_file_path(info_t *info)
 	folder = getenv_(info, "HOME=");
 	if (!folder)
 	return (NULL);
-	buffer = malloc(sizeof(char) * (_strlen(folder) + _strlen(HIST_FILE) + 2));
+	buffer = malloc(sizeof(char) * (str_length(folder) + str_length(HIST_FILE) + 2));
 	if (!buffer)
 	return (NULL);
 	buffer[0] = 0;
-	_strcpy(buffer, folder);
-	_strcat(buffer, "/");
-	_strcat(buffer, HIST_FILE);
+	string_copy(buffer, folder);
+	string_concat(buffer, "/");
+	string_concat(buffer, HIST_FILE);
 	return (buffer);
 }
 
@@ -46,10 +46,10 @@ int write_history(info_t *info)
 		return (-1);
 	for (node = info->history; node; node = node->next)
 	{
-		_putsfd(node->str, fd);
-		_putfd('\n', fd);
+		puts_fd(node->str, fd);
+		putfd('\n', fd);
 	}
-	_putfd(BUF_FLUSH, fd);
+	putfd(BUF_FLUSH, fd);
 	close(fd);
 	return (1);
 }
@@ -96,11 +96,11 @@ int read_history_file(info_t *info)
 	if (last != i)
 		add_to_history(info, buff + last, linecnt++);
 	free(buff);
-	info->histcnt = linecnt;
-	while (info->histcnt-- >= HIST_MAX)
+	info->histcount = linecnt;
+	while (info->histcount-- >= HIST_MAX)
 		delete_node_at_idx(&(info->history), 0);
 	renumber_history_list(info);
-	return (info->histcnt);
+	return (info->histcount);
 }
 
 /**
@@ -137,7 +137,7 @@ int renumber_history_list(info_t *info)
 
 	while (current_node)
 	{
-		current_node->num = count++;
+		current_node->number = count++;
 		current_node = current_node->next;
 	}
 	return (info->histcount = count);

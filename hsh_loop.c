@@ -106,7 +106,7 @@ void find_cmd(info_t *info)
 	}
 
 	for (index = 0, arg_count = 0; info->args[index]; index++)
-		if (!is_delimiter(info->args), char *[index], " \t\n")
+		if (!is_delimiter(info->args[index], " \t\n"))
 			arg_count++;
 
 	/* If there are no arguments, return */
@@ -124,12 +124,12 @@ void find_cmd(info_t *info)
 	{
 	/* If the command is not found, print an error message */
 		if ((interactive(info) || getenv_(info, "PATH=")
-			|| info->argv[0][0] == '/') && find_cmd(info, info->argv[0]))
+			|| info->argv[0][0] == '/') && is_command(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->args) != '\n')
 		{
 			info->status = 127;
-			print_error(info, "not found\n");
+			print_error(info, "Not Found\n");
 		}
 	}
 }

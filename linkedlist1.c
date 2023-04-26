@@ -38,9 +38,9 @@ char **list_to_string(list_t *head)
 	if (!strs)
 		return (NULL);
 
-	for (i = 0; curr_node; curr_node = curr_node->next, i++)
+	for (node_count = 0; curr_node; curr_node = curr_node->next, node_count++)
 	{
-		curr_str = malloc(_strlen(curr_node->str) + 1);
+		curr_str = malloc(str_length(curr_node->str) + 1);
 		if (!curr_str)
 		{
 			for (j = 0; j < node_count; j++)
@@ -49,11 +49,11 @@ char **list_to_string(list_t *head)
 			return (NULL);
 		}
 
-		curr_str = _strcpy(curr_str, curr_node->str);
-		strs[i] = curr_str;
+		curr_str = string_copy(curr_str, curr_node->str);
+		strs[node_count] = curr_str;
 	}
 
-	strs[i] = NULL;
+	strs[node_count] = NULL;
 	return (strs);
 }
 
@@ -69,7 +69,7 @@ size_t print_lists(const list_t *head)
 
 	while (head)
 	{
-		_puts(convert_number(head->num, 10, 0));
+		_puts(convert_number(head->number, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(head->str ? head->str : "(nil)");

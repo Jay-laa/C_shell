@@ -49,7 +49,7 @@ int assign(info_t *info)
 		_eputs("Incorrect number of arguments\n");
 		return (1);
 	}
-	if (assign(info, info->argv[1], info->argv[2]))
+	if (_setenv(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
@@ -71,7 +71,7 @@ int unassign(info_t *info)
 		return (1);
 	}
 	for (i = 1; i < info->args; i++)
-		unassign(info, info->argv[i]);
+		_unsetenv(info, info->argv[i]);
 
 	return (0);
 }

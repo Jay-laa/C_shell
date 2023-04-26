@@ -128,6 +128,7 @@ typedef struct liststr_s
  * @alias: alternate name
  * @environ: pass information between processes
  * @path: a string path for the current command
+ * @env_changed: on if environment variables were changed
  * @history: the list of command history
  * @histcount: the history line number count
  * @cmd_buf: address of pointer to cmd ; chain buffer, for memory management
@@ -143,8 +144,9 @@ typedef struct info_s
 {
 	char **args;
 	char *cmd_name;
-	char **env;
+	list_t **env;
 	char *path;
+	int env_changed;
 	int linecount_flag;
 	int line_count;
 	int line_number;
@@ -169,20 +171,21 @@ typedef struct info_s
 
 } info_t;
 
+
 /**
- * struct builtin_table - Searches for built-in commands and executes them
+ * struct builtin - Searches for built-in commands and executes them
  * @cmd_name: The name of the built-in command
  * @type: The type of the built-in command (e.g. "exit", "env")
  * @func: A pointer to the function that executes the built-in command
  * @cmd_func: A pointer to the function that validates the built-in command
  */
-typedef struct builtin_table
+typedef struct builtin
 {
 	char *cmd_name;
 	char *type;
 	int (*func)(info_t *);
 	int (*cmd_func)(info_t *);
-} builtin_table;
+} builtin_t;
 
 
 /**
@@ -232,18 +235,6 @@ typedef struct cmd_info
 #define MY_INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
-
-/**
- * struct builtin - struct for a built-in command
- * and its corresponding function
- * @type: the string representation of the built-in command
- * @func: a function pointer to the implementation of the built-in command
- */
-typedef struct builtin
-{
-	char *type;
-	int (*func)(info_t *);
-} builtin_struct;
 
 /* Function prototypes for hsh_loop.c */
 int start_hsh(info_t *, char **);
