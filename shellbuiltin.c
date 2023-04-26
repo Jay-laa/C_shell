@@ -1,12 +1,11 @@
 #include "myshell.h"
 
 /**
- * halt - exits the shell
- * @info: pointer to a struct containing potential arguments.
- * used to maintain constant function prototype.
- *
- * Return: exits with a given exit status (0) if info->argv[0] != "exit"
- */
+* halt - exits the shell
+* @info: pointer to a struct containing potential arguments.
+* used to maintain constant function prototype.
+* Return: exits with a given exit status (0) if info->argv[0] != "exit"
+*/
 int halt(info_t *info)
 {
 	int exit_status;
@@ -30,12 +29,11 @@ int halt(info_t *info)
 }
 
 /**
- * change - changes the current directory of the process
- * @info: structure containing potential arguments
- *        constant function prototype
- *
- * Return: Always 0
- */
+* change - changes the current directory of the process
+* @info: structure containing potential arguments
+*        constant function prototype
+* Return: Always 0
+*/
 int change(info_t *info)
 {
 	char *current_dir, *new_dir, buffer[1024];
@@ -50,7 +48,7 @@ int change(info_t *info)
 		new_dir = getenv_(info, "HOME=");
 		if (!new_dir)
 			chdir_ret = /* what should this be? */
-				chdir((new_dir = getenv_(info, "PWD=")) ? new_dir : "/");
+		chdir((new_dir = getenv_(info, "PWD=")) ? new_dir : "/");
 		else
 			chdir_ret = chdir(new_dir);
 	}
@@ -64,7 +62,7 @@ int change(info_t *info)
 		}
 		_puts(getenv_(info, "OLDPWD=")), _putchar('\n');
 		chdir_ret = 0;
-			chdir((new_dir = getenv_(info, "OLDPWD=")) ? new_dir : "/");
+		chdir((new_dir = getenv_(info, "OLDPWD=")) ? new_dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
@@ -83,10 +81,10 @@ int change(info_t *info)
 }
 
 /**
- * assist - prints help message to the standard output
- * @info: pointer to struct containing potential arguments
- * Return: 0 on success, or -1 on error
- */
+* assist - prints help message to the standard output
+* @info: pointer to struct containing potential arguments
+* Return: 0 on success, or -1 on error
+*/
 int assist(info_t *info)
 {
 	char **args;
