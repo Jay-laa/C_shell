@@ -16,11 +16,11 @@ int interactive(info_t *info)
 * @delim: the delimiter string
 * Return: 1 if true, 0 if false
 */
-int is_delimiter(char **ch, char *delim)
+int is_delimiter(char ch, char *delim)
 {
 	while (*delim)
 	{
-		if (*delim++ == **ch)
+		if (*delim++ == ch)
 			return (1);
 	}
 	return (0);

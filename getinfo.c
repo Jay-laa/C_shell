@@ -7,10 +7,10 @@
 
 void clear_info(info_t *info)
 {
-	info->args = NULL;
+	info->arg = NULL;
 	info->argv = NULL;
 	info->path = NULL;
-	info->args = 0;
+	info->arg = 0;
 }
 
 /**
@@ -25,20 +25,20 @@ void set_info(info_t *info, char **av)
 
 	info->env_changed = 0;
 	info->filename = av[0];
-	if (info->args)
+	if (info->arg)
 	{
-		info->argv = strtow((char *) info->args, " \t");
+		info->argv = strtow((char *) info->arg, " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
 			if (info->argv)
 			{
-				info->argv[0] = strdup((char *) info->args);
+				info->argv[0] = strdup((char *) info->arg);
 				info->argv[1] = NULL;
 			}
 		}
 	for (arg_count = 0; info->argv && info->argv[arg_count]; arg_count++)
-		info->args = arg_count;
+		info->argc = arg_count;
 
 		replace_alias(info);
 		replace_variables(info);
@@ -60,7 +60,7 @@ void free_info(info_t *info, int all)
 	if (all)
 	{
 	if (!info->cmd_buf)
-	free(info->args);
+	free(info->arg);
 	if (info->env)
 	free_linked_list(&(info->env));
 	if (info->history)
