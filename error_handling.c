@@ -15,8 +15,7 @@ void _eputs(char *str)
 
 	while (str[index] != '\0')
 	{
-		_eputs(str);
-		char(index);
+		_eputchar(str[index]);
 		index++;
 	}
 }

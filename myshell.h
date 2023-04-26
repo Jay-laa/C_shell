@@ -131,7 +131,7 @@ typedef struct pass_info
 	int line_number;
 	int env_changed;
 	int status;
-	char **cmd_buf;	/* pointer to cmd ; chain buffer, for memory mangement */
+	char *cmd_buf;	/* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type;
 	int readfd;
 	int histcount;
