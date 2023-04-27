@@ -21,9 +21,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <dirent.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <ctype.h>
 
 /*macros*/
 #define PATH_MAX_LENGTH 4096

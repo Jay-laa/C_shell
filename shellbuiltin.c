@@ -42,7 +42,6 @@ int change(info_t *info)
 	current_dir = getcwd(buffer, 1024);
 	if (!current_dir)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-
 	if (!info->argv[1])
 	{
 		new_dir = getenv_(info, "HOME=");
@@ -66,7 +65,6 @@ int change(info_t *info)
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
-
 	if (chdir_ret == -1)
 	{
 		print_error(info, "can't cd to ");
