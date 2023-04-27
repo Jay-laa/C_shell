@@ -5,7 +5,7 @@
 * @head: pointer to first node
 * Return: size of list
 */
-size_t list_lenght(const list_t *head)
+size_t list_length(const list_t *head)
 {
 	size_t count = 0;
 
@@ -37,7 +37,7 @@ char **list_to_string(list_t *head)
 	if (!strs)
 		return (NULL);
 
-for (node_count = 0; curr_node; curr_node = curr_node->next, node_count++)
+	for (node_count = 0; curr_node; curr_node = curr_node->next, node_count++)
 	{
 		curr_str = malloc(str_length(curr_node->str) + 1);
 		if (!curr_str)

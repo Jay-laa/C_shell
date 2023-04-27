@@ -68,7 +68,7 @@ int print_alias(list_t *alias_node)
 	if (alias_node)
 	{
 		equal_sign_pos = string_find_char(alias_node->str, '=');
-for (alias_str = alias_node->str; alias_str <= equal_sign_pos; alias_str++)
+		for (alias_str = alias_node->str; alias_str <= equal_sign_pos; alias_str++)
 			_putchar(*alias_str);
 		_putchar('\'');
 		_puts(equal_sign_pos + 1);

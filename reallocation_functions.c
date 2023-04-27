@@ -39,7 +39,8 @@ void free_strings(char **str_arr)
 *
 * Return: pointer to the new memory block
 */
-void *realloc_array(void *old_ptr, unsigned int old_size, unsigned int new_size)
+void *realloc_array(void *old_ptr, unsigned int old_size,
+		unsigned int new_size)
 {
 	char *new_ptr;
 

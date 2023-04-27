@@ -1,7 +1,8 @@
 #include "myshell.h"
 
 /**
-* get_environ - Returns a copy of the string array containing environment variables
+* get_environ - Returns a copy of the string array
+* containing environment variables
 * @info: Pointer to struct containing shell info
 * Return: Always 0
 */
