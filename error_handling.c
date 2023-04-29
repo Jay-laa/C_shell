@@ -51,16 +51,16 @@ int _eputchar(char ch)
 int putfd(char ch, int fd)
 {
 	static int buf_pos;
-	static char buffer[WRITE_BUF_SIZE];
+	static char buf[WRITE_BUF_SIZE];
 
 	if (ch == BUF_FLUSH || buf_pos >= WRITE_BUF_SIZE)
 	{
-		write(fd, buffer, buf_pos);
+		write(fd, buf, buf_pos);
 		buf_pos = 0;
 	}
 
 	if (ch != BUF_FLUSH)
-		buffer[buf_pos++] = ch;
+		buf[buf_pos++] = ch;
 
 	return (1);
 }

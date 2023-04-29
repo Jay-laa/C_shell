@@ -36,14 +36,9 @@ char *duplicate_chars(char *str, int start, int stop)
 	int v, w = 0;
 
 	for (w = 0, v = start; v < stop; v++)
-	{
 		if (str[v] != ':')
-		{
-			buffer[w] = str[v];
-			w++;
-		}
-	}
-	buffer[w] = '\0';
+			buffer[w++] = str[v];
+	buffer[w] = 0;
 	return (buffer);
 }
 
@@ -61,7 +56,7 @@ char *find_command_path(info_t *info, char *path_str, char *cmd)
 
 	if (!path_str)
 		return (NULL);
-	if ((strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((str_length(cmd) > 2) && starts_with(cmd, "./"))
 	{
 		if (is_command(info, cmd))
 			return (cmd);
@@ -72,11 +67,11 @@ char *find_command_path(info_t *info, char *path_str, char *cmd)
 		{
 			path = duplicate_chars(path_str, start_pos, index);
 			if (!*path)
-				strcat(path, cmd);
+				string_concat(path, cmd);
 			else
 			{
-				strcat(path, "/");
-				strcat(path, cmd);
+				string_concat(path, "/");
+				string_concat(path, cmd);
 			}
 			if (is_command(info, path))
 				return (path);
