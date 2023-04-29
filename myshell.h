@@ -137,7 +137,6 @@ typedef struct pass_info
 
 /**
  *struct builtin - Searches for built-in commands and executes it
- *struct builtin - contains a builtin string and related function
  *@type: the type of builtin command
  *@func: the function that executes the builtin command
  */
@@ -223,10 +222,10 @@ int set_alias(info_t *, char *);
 int nickname(info_t *);
 
 /* Function prototypes for lineinput.c */
-ssize_t get_input(info_t *, char **, size_t *);
-ssize_t getlinE(info_t *);
+ssize_t input_buffer(info_t *, char **, size_t *);
+ssize_t get_input(info_t *);
 ssize_t read_buffer(info_t *, char *, size_t *);
-int get_line(info_t *, char **, size_t *);
+int _getlinE(info_t *, char **, size_t *);
 void sigint_handler(int);
 
 /* Function prototypes for getinfo.c */

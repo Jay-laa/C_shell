@@ -18,7 +18,7 @@ int start_hsh(info_t *info, char **av)
 		if (interactive(info))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
-		read_status = get_input(info, NULL, NULL);
+		read_status = get_input(info);
 		if (read_status != -1)
 		{
 			set_info(info, av);

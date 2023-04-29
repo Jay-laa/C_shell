@@ -31,14 +31,14 @@ char *string_copy_n(char *destination, char *source, int count)
 }
 
 /**
-* string_concatenate - Concatenates two strings
+* string_concatenate_n - Concatenates two strings
 * @destination: The first string to be concatenated
 * @source: The second string to concatenate to the first string
 * @count: The maximum number of bytes to concatenate from the second string
 *
 * Return: The concatenated string
 */
-char *string_concatenate(char *destination, char *source, int count)
+char *string_concatenate_n(char *destination, char *source, int count)
 {
 	int dest_len = 0, src_len = 0;
 	char *start = destination;
