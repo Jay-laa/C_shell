@@ -10,17 +10,17 @@
 
 char *get_history_file_path(info_t *info)
 {
-	char *buffer, *folder;
+	char *buffer, *new_dir;
 
-	folder = getenv_(info, "HOME=");
-	if (!folder)
+	new_dir = getenv_(info, "HOME=");
+	if (!new_dir)
 	return (NULL);
-	buffer = malloc(sizeof(char) * (str_length(folder)
+	buffer = malloc(sizeof(char) * (str_length(new_dir)
 				+ str_length(HIST_FILE) + 2));
 	if (!buffer)
 	return (NULL);
 	buffer[0] = 0;
-	string_copy(buffer, folder);
+	string_copy(buffer, new_dir);
 	string_concat(buffer, "/");
 	string_concat(buffer, HIST_FILE);
 	return (buffer);

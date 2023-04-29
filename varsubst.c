@@ -1,13 +1,13 @@
 #include "myshell.h"
 
 /**
-* is_var_chain - check if current char in buffer is a chain delimeter
+* var_chain - check if current char in buffer is a chain delimeter
 * @info: the parameter struct
 * @buf: the char buffer
 * @p: address of current position in buf
 * Return: 1 if chain delimeter, 0 otherwise
 */
-int is_var_chain(info_t *info, char *buf, size_t *p)
+int var_chain(info_t *info, char *buf, size_t *p)
 {
 	size_t pos = *p;
 
@@ -43,7 +43,7 @@ int is_var_chain(info_t *info, char *buf, size_t *p)
 * @buf_len: length of buf
 * Return: Void
 */
-void check_chain(info_t *info, char *buf,
+void check_var_chain(info_t *info, char *buf,
 		size_t *p, size_t start_pos, size_t buf_len)
 {
 	size_t current_pos = *p;
