@@ -64,7 +64,8 @@
 */
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
-char *convert_number(int num, int base, int uppercase);
+
+
 
 
 /* Struct declarations */
